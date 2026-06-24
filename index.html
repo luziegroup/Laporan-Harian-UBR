@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan Harian Petugas UBR</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #C9A84C; --gold-light: #E8D4A0; --gold-pale: #FAF5E8;
+  --green: #1A5C3A; --green-mid: #2E7D52; --green-light: #EAF3EE;
+  --dark: #1A1A1A; --muted: #6B6B6B; --border: #E0D9CC;
+  --white: #FEFCF8; --surface: #FFFFFF; --danger: #C0392B;
+}
+body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--dark); min-height: 100vh; }
+
+/* NAV */
+.nav-toggle { position: fixed; top: 14px; right: 16px; z-index: 999; display: flex; gap: 6px; background: var(--green); border-radius: 100px; padding: 6px 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.nav-btn { background: transparent; border: none; color: rgba(255,255,255,0.6); font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 10px; border-radius: 100px; transition: all 0.2s; }
+.nav-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+/* HERO */
+.hero { background: var(--green); padding: 3rem 1.5rem 5rem; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(201,168,76,0.06) 30px,rgba(201,168,76,0.06) 31px); }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: var(--gold-light); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 1.5rem; }
+.hero-badge::before { content: '✦'; font-size: 9px; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 0.75rem; }
+.hero-title span { color: var(--gold); }
+.hero-sub { font-size: 15px; color: rgba(255,255,255,0.65); max-width: 440px; margin: 0 auto; line-height: 1.7; }
+
+/* CONTAINER */
+.container { max-width: 680px; margin: -2.5rem auto 4rem; padding: 0 1.25rem; position: relative; z-index: 10; }
+
+/* PROGRESS */
+.progress-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px 16px 0 0; padding: 1.25rem 1.5rem 1rem; border-bottom: none; }
+.progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.progress-label { font-size: 13px; color: var(--muted); }
+.progress-pct { font-size: 13px; font-weight: 500; color: var(--green); }
+.progress-track { height: 5px; background: var(--gold-pale); border-radius: 10px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--green-mid), var(--gold)); border-radius: 10px; transition: width 0.5s ease; width: 0%; }
+.dots { display: flex; justify-content: center; gap: 8px; padding: 1rem 0 0.25rem; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
+.dot.active { background: var(--green); width: 24px; border-radius: 4px; }
+.dot.done { background: var(--gold); }
+
+.step { display: none; }
+.step.active { display: block; }
+
+/* CARD */
+.card { background: var(--surface); border: 1px solid var(--border); border-top: none; padding: 1.75rem 1.75rem 1.5rem; border-radius: 0 0 16px 16px; }
+.section-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+.eyebrow-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.eyebrow-num { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1px; }
+.eyebrow-title { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600; color: var(--dark); }
+
+/* INFO STRIP — tanggal/jabatan otomatis */
+.info-strip { background: var(--green-light); border: 1px solid #C3DDD0; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.info-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.info-icon { font-size: 15px; }
+.info-label { color: var(--muted); }
+.info-val { font-weight: 500; color: var(--green); }
+
+/* NAMA SELECT */
+.nama-select-wrap { position: relative; margin-bottom: 1.4rem; }
+.nama-select-wrap select { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 40px 13px 14px; font-size: 15px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--dark); background: var(--white); outline: none; -webkit-appearance: none; appearance: none; transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer; }
+.nama-select-wrap select:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,125,82,0.1); }
+.nama-select-wrap::after { content: '▾'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 14px; }
+.nama-select-wrap select.error { border-color: var(--danger) !important; }
+
+/* FIELDS */
+.field { margin-bottom: 1.4rem; }
+.field:last-child { margin-bottom: 0; }
+.field-label { display: block; font-size: 14px; font-weight: 500; color: var(--dark); margin-bottom: 6px; }
+.req { color: var(--gold); margin-left: 3px; }
+.field-hint { font-size: 12px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; line-height: 1.7; }
+textarea:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,125,82,0.1); }
+textarea.error { border-color: var(--danger) !important; }
+.ta-sm { min-height: 90px; }
+.ta-md { min-height: 120px; }
+.ta-lg { min-height: 150px; }
+
+/* DIVIDER */
+.divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
+
+/* ERROR */
+.field-err { font-size: 12px; color: var(--danger); margin-top: 5px; display: none; }
+
+/* BUTTONS */
+.btn-row { display: flex; gap: 10px; justify-content: space-between; align-items: center; margin-top: 1.75rem; }
+.btn-back { display: inline-flex; align-items: center; gap: 6px; padding: 11px 20px; border: 1.5px solid var(--border); border-radius: 10px; background: transparent; color: var(--muted); font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
+.btn-back:hover { border-color: var(--dark); color: var(--dark); }
+.btn-next { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; background: var(--green); border: none; border-radius: 10px; color: #fff; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; margin-left: auto; }
+.btn-next:hover { background: var(--green-mid); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(26,92,58,0.3); }
+.btn-submit { display: inline-flex; align-items: center; gap: 8px; padding: 13px 32px; background: linear-gradient(135deg, var(--gold), #A8862E); border: none; border-radius: 10px; color: #1A1100; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; margin-left: auto; box-shadow: 0 2px 12px rgba(201,168,76,0.35); }
+.btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.45); }
+
+/* SUCCESS */
+.success-screen { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 4rem 2rem; text-align: center; }
+.success-screen.show { display: block; }
+.success-seal { width: 90px; height: 90px; border-radius: 50%; background: var(--green-light); border: 3px solid var(--green-mid); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 38px; animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+@keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.success-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--dark); margin-bottom: 0.75rem; }
+.success-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 380px; margin: 0 auto 2rem; }
+.summary-box { background: var(--gold-pale); border: 1px solid var(--gold-light); border-radius: 12px; padding: 1.25rem 1.5rem; text-align: left; margin-bottom: 1.5rem; }
+.summary-title { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 12px; }
+.summary-item { padding: 8px 0; border-bottom: 1px dashed var(--gold-light); font-size: 13px; }
+.summary-item:last-child { border-bottom: none; }
+.summary-key { font-weight: 500; color: var(--dark); margin-bottom: 3px; }
+.summary-text { color: var(--muted); line-height: 1.6; }
+.btn-print { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border: 1.5px solid var(--green); border-radius: 10px; color: var(--green); font-size: 14px; font-family: 'DM Sans', sans-serif; background: transparent; cursor: pointer; transition: all 0.2s; }
+.btn-print:hover { background: var(--green-light); }
+
+/* ADMIN */
+.admin-page { padding: 0; }
+.admin-hero { background: var(--green); padding: 2.5rem 2rem 2rem; }
+.admin-hero-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }
+.admin-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.admin-sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+.admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-export { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 8px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; border: none; }
+.btn-csv { background: var(--gold); color: #1A1100; }
+.btn-csv:hover { background: var(--gold-light); }
+.admin-body { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; }
+.stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+.stat-val { font-size: 28px; font-weight: 500; color: var(--dark); line-height: 1; }
+.stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.stat-green .stat-val { color: var(--green-mid); }
+.table-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
+.table-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.table-title { font-size: 13px; font-weight: 500; }
+.table-count { font-size: 12px; color: var(--muted); }
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: var(--gold-pale); color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; padding: 10px 12px; text-align: left; white-space: nowrap; }
+td { padding: 9px 12px; border-top: 1px solid var(--border); color: var(--dark); vertical-align: top; max-width: 220px; }
+td.td-wrap { white-space: normal; word-break: break-word; line-height: 1.5; }
+tr:hover td { background: #FAFAF8; }
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 14px; }
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+/* LAPORAN CARD di dashboard */
+.laporan-card { border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 12px; }
+.laporan-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px; }
+.laporan-nama { font-weight: 600; font-size: 15px; }
+.laporan-meta { font-size: 12px; color: var(--muted); }
+.laporan-section { margin-bottom: 10px; }
+.laporan-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); font-weight: 500; margin-bottom: 4px; }
+.laporan-section-text { font-size: 13px; color: var(--dark); line-height: 1.6; }
+
+/* GATE */
+.gate { max-width: 400px; margin: 6rem auto; padding: 0 1.5rem; text-align: center; }
+.gate-icon { font-size: 48px; margin-bottom: 1rem; }
+.gate-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; margin-bottom: 0.5rem; }
+.gate-sub { font-size: 14px; color: var(--muted); margin-bottom: 1.5rem; }
+.gate-input { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: 15px; font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); outline: none; text-align: center; letter-spacing: 0.1em; margin-bottom: 10px; }
+.gate-input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(46,125,82,0.1); }
+.btn-gate { width: 100%; padding: 12px; background: var(--green); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.gate-err { font-size: 13px; color: var(--danger); margin-top: 8px; display: none; }
+.gate-hint { font-size: 11px; color: var(--muted); margin-top: 1rem; }
+
+.footer { text-align: center; padding: 1.5rem; font-size: 12px; color: var(--border); }
+
+@media print {
+  .nav-toggle, .btn-row, .dots, .progress-wrap { display: none !important; }
+  .step { display: block !important; }
+  .card { border: 1px solid #DDD; border-radius: 8px; margin-bottom: 1rem; border-top: 1px solid #DDD !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-toggle">
+  <button class="nav-btn active" id="nav-form" onclick="showPage('form')">📋 Form</button>
+  <button class="nav-btn" id="nav-admin" onclick="showPage('admin-gate')">🔐 Admin</button>
+</div>
+
+<!-- ══════ FORM PAGE ══════ -->
+<div class="page active" id="page-form">
+  <div class="hero">
+    <div class="hero-badge">Formulir Internal</div>
+    <h1 class="hero-title">Laporan Harian<br><span>Petugas UBR</span></h1>
+    <p class="hero-sub">Isi laporan kegiatan harian Anda setiap hari dengan lengkap dan jujur.</p>
+  </div>
+
+  <div class="container">
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-meta">
+        <span class="progress-label" id="progress-label">Langkah 1 dari 3</span>
+        <span class="progress-pct" id="progress-pct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="dots">
+        <div class="dot active" id="dot-0"></div>
+        <div class="dot" id="dot-1"></div>
+        <div class="dot" id="dot-2"></div>
+      </div>
+    </div>
+
+    <!-- STEP 1: Identitas -->
+    <div class="step active" id="step-0">
+      <div class="card">
+        <div class="section-eyebrow">
+          <div class="eyebrow-icon">👤</div>
+          <div><div class="eyebrow-num">Langkah 01</div><div class="eyebrow-title">Identitas Petugas</div></div>
+        </div>
+
+        <!-- Info otomatis -->
+        <div class="info-strip" id="info-strip">
+          <div class="info-item"><span class="info-icon">📅</span><span class="info-label">Hari, Tanggal:</span><span class="info-val" id="info-tgl">—</span></div>
+          <div class="info-item"><span class="info-icon">💼</span><span class="info-label">Jabatan:</span><span class="info-val" id="info-jabatan">— pilih nama dulu —</span></div>
+          <div class="info-item"><span class="info-icon">🕋</span><span class="info-label">Program:</span><span class="info-val">Marketing WMS &amp; UBR</span></div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Nama Petugas <span class="req">*</span></label>
+          <div class="nama-select-wrap">
+            <select id="nama" onchange="onNamaChange()">
+              <option value="">— Pilih nama Anda —</option>
+              <!-- ✏️ TAMBAH/UBAH NAMA DAN JABATAN DI SINI -->
+              <option value="Rohman|Marketing WMS &amp; UBR">Rohman</option>
+              <option value="Ahmad|Pembimbing Ibadah">Ahmad</option>
+              <option value="Siti Fatimah|Koordinator Lapangan">Siti Fatimah</option>
+              <option value="Budi Santoso|Petugas Logistik">Budi Santoso</option>
+              <option value="Hasan|Ketua Rombongan">Hasan</option>
+              <!-- Tambahkan nama lain di sini dengan format: value="NamaLengkap|Jabatan" -->
+            </select>
+          </div>
+          <div class="field-err" id="err-nama">Nama wajib dipilih.</div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-next" onclick="goNext()">Lanjut →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: Aktivitas & Hasil -->
+    <div class="step" id="step-1">
+      <div class="card">
+        <div class="section-eyebrow">
+          <div class="eyebrow-icon">1️⃣</div>
+          <div><div class="eyebrow-num">Langkah 02</div><div class="eyebrow-title">Aktivitas & Hasil</div></div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="aktivitas">Aktivitas Hari Ini <span class="req">*</span><span class="field-hint">— apa saja yang dilakukan?</span></label>
+          <textarea class="ta-lg" id="aktivitas" placeholder="Tuliskan semua aktivitas yang dilakukan hari ini secara rinci. Contoh:
+• Kunjungan ke Sekolah Putera Harapan, penawaran WMS dan paket Umroh.
+• Konfirmasi pemasangan tiang di Griya Asri Kebumen.
+• Penawaran WiFi home di wilayah Beji."></textarea>
+          <div class="field-err" id="err-aktivitas">Aktivitas hari ini wajib diisi.</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="field">
+          <label class="field-label" for="hasil">Hasil &amp; Pencapaian <span class="req">*</span><span class="field-hint">— apa yang berhasil dicapai?</span></label>
+          <textarea class="ta-lg" id="hasil" placeholder="Tuliskan hasil konkret dari aktivitas yang dilakukan. Contoh:
+• Respon baik dari wakil direktur Yayasan Abdul Mukti, diminta mengajukan proposal.
+• Menunggu hasil musyawarah paguyuban warga terkait ijin pemasangan tiang."></textarea>
+          <div class="field-err" id="err-hasil">Hasil & Pencapaian wajib diisi.</div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-back" onclick="goBack()">← Kembali</button>
+          <button class="btn-next" onclick="goNext()">Lanjut →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Solusi & Tindak Lanjut -->
+    <div class="step" id="step-2">
+      <div class="card">
+        <div class="section-eyebrow">
+          <div class="eyebrow-icon">3️⃣</div>
+          <div><div class="eyebrow-num">Langkah 03</div><div class="eyebrow-title">Solusi / Tindak Lanjut</div></div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="tindak-lanjut">Solusi / Tindak Lanjut <span class="req">*</span><span class="field-hint">— rencana ke depan?</span></label>
+          <textarea class="ta-lg" id="tindak-lanjut" placeholder="Tuliskan rencana tindak lanjut atau solusi atas kegiatan dan hasil di atas. Contoh:
+• Menyiapkan proposal penawaran paket Umroh UBR dan ketemu dengan Pembina Yayasan Ust. Arifin.
+• Follow up kepada PIC Bpk. Mukhlisin mengenai hasil musyawarah warga."></textarea>
+          <div class="field-err" id="err-tindak">Tindak lanjut wajib diisi.</div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="field">
+          <label class="field-label" for="kendala">Kendala yang Dihadapi <span class="field-hint">(opsional)</span></label>
+          <textarea class="ta-sm" id="kendala" placeholder="Tuliskan kendala yang dihadapi hari ini, jika ada..."></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="catatan">Catatan Tambahan untuk Manajemen <span class="field-hint">(opsional)</span></label>
+          <textarea class="ta-sm" id="catatan" placeholder="Informasi penting, saran, atau hal lain yang perlu diketahui manajemen..."></textarea>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-back" onclick="goBack()">← Kembali</button>
+          <button class="btn-submit" onclick="submitForm()">✦ Kirim Laporan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-seal">✅</div>
+      <h2 class="success-title">Laporan Terkirim!</h2>
+      <p class="success-sub">Terima kasih. Laporan harian Anda telah tercatat dan dapat diakses oleh manajemen UBR.</p>
+      <div class="summary-box">
+        <div class="summary-title">✦ Ringkasan Laporan</div>
+        <div class="summary-item">
+          <div class="summary-key" id="sum-header">—</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-key">1 · Aktivitas Hari Ini</div>
+          <div class="summary-text" id="sum-aktivitas">—</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-key">2 · Hasil &amp; Pencapaian</div>
+          <div class="summary-text" id="sum-hasil">—</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-key">3 · Solusi / Tindak Lanjut</div>
+          <div class="summary-text" id="sum-tindak">—</div>
+        </div>
+      </div>
+      <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+    </div>
+  </div>
+  <div class="footer">© UBR — Laporan Harian Internal</div>
+</div>
+
+<!-- ══════ ADMIN GATE ══════ -->
+<div class="page" id="page-admin-gate">
+  <div class="gate">
+    <div class="gate-icon">🔐</div>
+    <h2 class="gate-title">Dashboard Admin</h2>
+    <p class="gate-sub">Masukkan kata sandi untuk melihat rekap laporan harian petugas UBR.</p>
+    <input type="password" class="gate-input" id="gate-pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkGate()">
+    <button class="btn-gate" onclick="checkGate()">Masuk ke Dashboard →</button>
+    <div class="gate-err" id="gate-err">Kata sandi salah. Coba lagi.</div>
+    <p class="gate-hint">Kata sandi default: <code>ubr2024</code></p>
+  </div>
+</div>
+
+<!-- ══════ ADMIN DASHBOARD ══════ -->
+<div class="page admin-page" id="page-admin">
+  <div class="admin-hero">
+    <div class="admin-hero-inner">
+      <div>
+        <div class="admin-title">📊 Rekap Laporan Harian Petugas UBR</div>
+        <div class="admin-sub" id="admin-sub">Memuat data...</div>
+      </div>
+      <div class="admin-actions">
+        <button class="btn-export btn-csv" onclick="exportCSV()">⬇ Export CSV</button>
+        <button class="btn-export" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.25);" onclick="renderDashboard()">🔄 Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-label">Total Laporan</div><div class="stat-val" id="st-total">—</div><div class="stat-sub">semua petugas</div></div>
+      <div class="stat-card stat-green"><div class="stat-label">Petugas Aktif</div><div class="stat-val" id="st-petugas">—</div><div class="stat-sub">melapor hari ini</div></div>
+      <div class="stat-card"><div class="stat-label">Ada Kendala</div><div class="stat-val" id="st-kendala">—</div><div class="stat-sub">perlu perhatian</div></div>
+    </div>
+
+    <!-- LAPORAN CARDS -->
+    <div class="table-card">
+      <div class="table-header">
+        <div class="table-title">📋 Laporan Terbaru</div>
+        <div class="table-count" id="tbl-count">—</div>
+      </div>
+      <div style="padding:1rem" id="laporan-list">
+        <div class="empty-state"><div class="empty-icon">📭</div>Belum ada data laporan</div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+      <div class="table-header">
+        <div class="table-title">📊 Tabel Data Lengkap</div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama</th>
+              <th>Jabatan</th>
+              <th>Hari / Tanggal</th>
+              <th>Aktivitas</th>
+              <th>Hasil</th>
+              <th>Tindak Lanjut</th>
+              <th>Kendala</th>
+              <th>Catatan</th>
+              <th>Waktu Input</th>
+            </tr>
+          </thead>
+          <tbody id="tbl-body">
+            <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📭</div>Belum ada data</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// KONFIGURASI
+// ══════════════════════════════════════════════════════
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQQXg2BPFupbtFjHVXRtCi-sjgIco5uFEJAbfsT425LEnUs985kAiR0U6BuQKJ-iSy/exec';
+// Cara setup Google Apps Script:
+// 1. Buka Google Sheets → Extensions → Apps Script
+// 2. Paste kode di bawah (lihat komentar APPS SCRIPT CODE)
+// 3. Deploy → New deployment → Web app → Execute as Me → Anyone → Deploy
+// 4. Copy URL dan paste menggantikan teks di atas
+
+/*
+======= APPS SCRIPT CODE =======
+Paste ini ke Google Apps Script:
+
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const d = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    d.waktuInput, d.nama, d.jabatan, d.hariTanggal, d.tglRaw,
+    d.aktivitas, d.hasil, d.tindakLanjut, d.kendala, d.catatan
+  ]);
+  return ContentService
+    .createTextOutput(JSON.stringify({status:'ok'}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doGet() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const rows = sheet.getDataRange().getValues();
+  if (rows.length < 2) return ContentService.createTextOutput('[]').setMimeType(ContentService.MimeType.JSON);
+  const keys = ['waktuInput','nama','jabatan','hariTanggal','tglRaw','aktivitas','hasil','tindakLanjut','kendala','catatan'];
+  const data = rows.slice(1).map(r => {
+    const obj = {};
+    keys.forEach((k,i) => obj[k] = r[i] || '');
+    return obj;
+  });
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+*/
+
+const ADMIN_PW = 'ubr2024'; // ✏️ Ganti kata sandi admin di sini
+
+// ══════════════════════════════════════════════════════
+// DATA NAMA → JABATAN
+// ✏️ Sesuaikan dengan tim Anda
+// ══════════════════════════════════════════════════════
+const NAMA_JABATAN = {
+  'Rohman': 'Marketing WMS & UBR',
+  'Ahmad': 'Pembimbing Ibadah',
+  'Siti Fatimah': 'Koordinator Lapangan',
+  'Budi Santoso': 'Petugas Logistik',
+  'Hasan': 'Ketua Rombongan',
+};
+
+// ══════════════════════════════════════════════════════
+// TANGGAL OTOMATIS
+// ══════════════════════════════════════════════════════
+const HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+function getTodayStr() {
+  const now = new Date();
+  return HARI[now.getDay()] + ', ' + now.getDate() + ' ' + BULAN[now.getMonth()] + ' ' + now.getFullYear();
+}
+function getTodayRaw() {
+  const now = new Date();
+  return now.toISOString().slice(0, 10);
+}
+
+document.getElementById('info-tgl').textContent = getTodayStr();
+
+function onNamaChange() {
+  const sel = document.getElementById('nama');
+  const val = sel.value;
+  if (!val) {
+    document.getElementById('info-jabatan').textContent = '— pilih nama dulu —';
+    return;
+  }
+  const [nama] = val.split('|');
+  const jabatan = NAMA_JABATAN[nama] || val.split('|')[1] || '—';
+  document.getElementById('info-jabatan').textContent = jabatan;
+}
+
+// ══════════════════════════════════════════════════════
+// NAVIGASI HALAMAN
+// ══════════════════════════════════════════════════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if (name === 'form') {
+    document.getElementById('page-form').classList.add('active');
+    document.getElementById('nav-form').classList.add('active');
+  } else if (name === 'admin-gate') {
+    document.getElementById('page-admin-gate').classList.add('active');
+    document.getElementById('nav-admin').classList.add('active');
+  } else if (name === 'admin') {
+    document.getElementById('page-admin').classList.add('active');
+    document.getElementById('nav-admin').classList.add('active');
+    renderDashboard();
+  }
+}
+
+function checkGate() {
+  const pw = document.getElementById('gate-pw').value;
+  const err = document.getElementById('gate-err');
+  if (pw === ADMIN_PW) { err.style.display = 'none'; showPage('admin'); }
+  else { err.style.display = 'block'; }
+}
+
+// ══════════════════════════════════════════════════════
+// STEP NAVIGATION
+// ══════════════════════════════════════════════════════
+let currentStep = 0;
+const totalSteps = 3;
+
+function updateProgress() {
+  const pct = Math.round((currentStep / totalSteps) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-label').textContent = 'Langkah ' + (currentStep + 1) + ' dari ' + totalSteps;
+  for (let i = 0; i < totalSteps; i++) {
+    const dot = document.getElementById('dot-' + i);
+    dot.classList.remove('active', 'done');
+    if (i < currentStep) dot.classList.add('done');
+    else if (i === currentStep) dot.classList.add('active');
+  }
+}
+
+function clearErrors() {
+  document.querySelectorAll('.field-err').forEach(e => e.style.display = 'none');
+  document.querySelectorAll('.error').forEach(e => e.classList.remove('error'));
+}
+
+function showErr(errId, fieldId) {
+  const e = document.getElementById(errId);
+  if (e) e.style.display = 'block';
+  if (fieldId) {
+    const f = document.getElementById(fieldId);
+    if (f) f.classList.add('error');
+  }
+}
+
+function validateStep(step) {
+  clearErrors();
+  let ok = true;
+  if (step === 0) {
+    if (!document.getElementById('nama').value) { showErr('err-nama', 'nama'); ok = false; }
+  } else if (step === 1) {
+    if (!document.getElementById('aktivitas').value.trim()) { showErr('err-aktivitas', 'aktivitas'); ok = false; }
+    if (!document.getElementById('hasil').value.trim()) { showErr('err-hasil', 'hasil'); ok = false; }
+  } else if (step === 2) {
+    if (!document.getElementById('tindak-lanjut').value.trim()) { showErr('err-tindak', 'tindak-lanjut'); ok = false; }
+  }
+  return ok;
+}
+
+function goNext() {
+  if (!validateStep(currentStep)) return;
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep++;
+  document.getElementById('step-' + currentStep).classList.add('active');
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  clearErrors();
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep--;
+  document.getElementById('step-' + currentStep).classList.add('active');
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════════════════
+// SUBMIT
+// ══════════════════════════════════════════════════════
+async function submitForm() {
+  if (!validateStep(2)) return;
+
+  const namaVal = document.getElementById('nama').value;
+  const [nama] = namaVal.split('|');
+  const jabatan = NAMA_JABATAN[nama] || namaVal.split('|')[1] || '—';
+
+  const payload = {
+    waktuInput: new Date().toLocaleString('id-ID'),
+    nama,
+    jabatan,
+    hariTanggal: getTodayStr(),
+    tglRaw: getTodayRaw(),
+    aktivitas: document.getElementById('aktivitas').value.trim(),
+    hasil: document.getElementById('hasil').value.trim(),
+    tindakLanjut: document.getElementById('tindak-lanjut').value.trim(),
+    kendala: document.getElementById('kendala').value.trim(),
+    catatan: document.getElementById('catatan').value.trim(),
+  };
+
+  // Tampilkan success
+  document.getElementById('step-2').classList.remove('active');
+  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('success-screen').classList.add('show');
+
+  document.getElementById('sum-header').textContent = nama + ' · ' + jabatan + ' · ' + getTodayStr();
+  document.getElementById('sum-aktivitas').textContent = payload.aktivitas;
+  document.getElementById('sum-hasil').textContent = payload.hasil;
+  document.getElementById('sum-tindak').textContent = payload.tindakLanjut;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (SCRIPT_URL !== 'GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_ANDA') {
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) { console.error('Gagal kirim ke Sheets:', e); }
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════════════════
+async function loadData() {
+  if (SCRIPT_URL === 'GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_ANDA') return [];
+  try {
+    const res = await fetch(SCRIPT_URL);
+    return await res.json();
+  } catch { return []; }
+}
+
+async function renderDashboard() {
+  const data = await loadData();
+  const n = data.length;
+
+  document.getElementById('admin-sub').textContent = n + ' laporan · Diperbarui: ' + new Date().toLocaleString('id-ID');
+  document.getElementById('st-total').textContent = n || '—';
+  document.getElementById('tbl-count').textContent = n + ' laporan';
+
+  const today = getTodayRaw();
+  const ptgsHariIni = new Set(data.filter(d => d.tglRaw === today).map(d => d.nama)).size;
+  const adaKendala = data.filter(d => d.kendala && d.kendala.trim()).length;
+
+  document.getElementById('st-petugas').textContent = ptgsHariIni || '—';
+  document.getElementById('st-kendala').textContent = adaKendala || '—';
+
+  // Laporan cards
+  const lDiv = document.getElementById('laporan-list');
+  if (!n) { lDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>Belum ada laporan</div>'; }
+  else {
+    lDiv.innerHTML = [...data].reverse().slice(0, 20).map(d => `
+      <div class="laporan-card">
+        <div class="laporan-card-header">
+          <div>
+            <div class="laporan-nama">${d.nama || '—'}</div>
+            <div class="laporan-meta">${d.jabatan || ''}</div>
+          </div>
+          <div class="laporan-meta">${d.hariTanggal || d.tglRaw || '—'}</div>
+        </div>
+        <div class="laporan-section">
+          <div class="laporan-section-title">1 · Aktivitas Hari Ini</div>
+          <div class="laporan-section-text">${(d.aktivitas||'—').replace(/\n/g,'<br>')}</div>
+        </div>
+        <div class="laporan-section">
+          <div class="laporan-section-title">2 · Hasil &amp; Pencapaian</div>
+          <div class="laporan-section-text">${(d.hasil||'—').replace(/\n/g,'<br>')}</div>
+        </div>
+        <div class="laporan-section">
+          <div class="laporan-section-title">3 · Solusi / Tindak Lanjut</div>
+          <div class="laporan-section-text">${(d.tindakLanjut||'—').replace(/\n/g,'<br>')}</div>
+        </div>
+        ${d.kendala ? `<div class="laporan-section"><div class="laporan-section-title" style="color:#C0392B">⚡ Kendala</div><div class="laporan-section-text">${d.kendala.replace(/\n/g,'<br>')}</div></div>` : ''}
+      </div>`).join('');
+  }
+
+  // Table
+  const tbody = document.getElementById('tbl-body');
+  if (!n) { tbody.innerHTML = '<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📭</div>Belum ada data</div></td></tr>'; return; }
+  tbody.innerHTML = [...data].reverse().map((d, i) => `<tr>
+    <td style="color:var(--muted)">${n - i}</td>
+    <td style="font-weight:500;white-space:nowrap">${d.nama || '—'}</td>
+    <td style="white-space:nowrap">${d.jabatan || '—'}</td>
+    <td style="white-space:nowrap">${d.hariTanggal || d.tglRaw || '—'}</td>
+    <td class="td-wrap">${(d.aktivitas||'—').replace(/\n/g,'<br>')}</td>
+    <td class="td-wrap">${(d.hasil||'—').replace(/\n/g,'<br>')}</td>
+    <td class="td-wrap">${(d.tindakLanjut||'—').replace(/\n/g,'<br>')}</td>
+    <td class="td-wrap">${d.kendala || '—'}</td>
+    <td class="td-wrap">${d.catatan || '—'}</td>
+    <td style="color:var(--muted);font-size:11px;white-space:nowrap">${d.waktuInput || '—'}</td>
+  </tr>`).join('');
+}
+
+async function exportCSV() {
+  const data = await loadData();
+  if (!data.length) { alert('Belum ada data untuk diekspor.'); return; }
+  const h = ['No','Waktu Input','Nama','Jabatan','Hari & Tanggal','Aktivitas Hari Ini','Hasil & Pencapaian','Solusi / Tindak Lanjut','Kendala','Catatan'];
+  const rows = data.map((d, i) => [
+    i+1, d.waktuInput, d.nama, d.jabatan, d.hariTanggal,
+    d.aktivitas, d.hasil, d.tindakLanjut, d.kendala, d.catatan
+  ].map(v => '"' + String(v || '').replace(/"/g, '""') + '"'));
+  const csv = 'sep=;\n' + [h, ...rows].map(r => r.join(';')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' }));
+  a.download = 'laporan_harian_ubr_' + getTodayRaw() + '.csv';
+  a.click();
+}
+
+updateProgress();
+</script>
+</body>
+</html>
