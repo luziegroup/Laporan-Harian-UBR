@@ -162,7 +162,42 @@ tr:hover td { background: #FAFAF8; }
 .laporan-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); font-weight: 500; margin-bottom: 4px; }
 .laporan-section-text { font-size: 13px; color: var(--dark); line-height: 1.6; }
 
-/* ═══ MANAJEMEN PETUGAS ═══ */
+/* ═══ FILTER BAR ═══ */
+.filter-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.filter-select-wrap { flex: 1; min-width: 140px; position: relative; }
+.filter-select-wrap select { width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 9px 32px 9px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); outline: none; appearance: none; cursor: pointer; }
+.filter-select-wrap select:focus { border-color: var(--green-mid); }
+.btn-filter-reset { padding: 9px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: transparent; font-size: 13px; color: var(--muted); font-family: 'DM Sans', sans-serif; cursor: pointer; white-space: nowrap; }
+.btn-filter-reset:hover { border-color: var(--danger); color: var(--danger); }
+.filter-info { font-size: 12px; color: var(--muted); }
+
+/* ═══ LAPORAN CARD REDESIGN ═══ */
+.lap-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; overflow: hidden; }
+.lap-card-head { display: flex; align-items: center; gap: 12px; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); background: var(--gold-pale); }
+.lap-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--green-light); border: 2px solid var(--green-mid); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: var(--green); flex-shrink: 0; }
+.lap-head-info { flex: 1; min-width: 0; }
+.lap-nama { font-weight: 600; font-size: 15px; color: var(--dark); }
+.lap-meta { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.lap-tanggal { font-size: 12px; color: var(--green); font-weight: 500; background: var(--green-light); padding: 4px 10px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+.lap-body { padding: 1rem 1.25rem; }
+.lap-section { margin-bottom: 12px; }
+.lap-section:last-child { margin-bottom: 0; }
+.lap-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
+.lap-section-label::after { content: ''; flex: 1; height: 1px; background: var(--gold-light); }
+.lap-section-text { font-size: 13px; color: var(--dark); line-height: 1.7; }
+.lap-kendala { background: #FEF2F2; border: 1px solid #FEE2E2; border-radius: 8px; padding: 10px 12px; margin-top: 8px; }
+.lap-kendala-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--danger); margin-bottom: 4px; }
+.lap-footer { padding: 0.75rem 1.25rem 1rem; border-top: 1px solid var(--border); }
+.lap-waktu { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+
+/* ═══ COLLAPSIBLE ═══ */
+.lap-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border); }
+.lap-toggle-label { font-size: 13px; color: var(--muted); font-weight: 500; }
+.lap-toggle-icon { font-size: 12px; color: var(--muted); transition: transform 0.2s; }
+.lap-toggle.open .lap-toggle-icon { transform: rotate(180deg); }
+.lap-collapsible { display: none; }
+.lap-collapsible.open { display: block; }
 .petugas-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); }
 .petugas-toolbar-title { font-size: 13px; font-weight: 500; }
 .btn-add-petugas { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--green); color: #fff; border: none; border-radius: 8px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
@@ -217,17 +252,76 @@ tr:hover td { background: #FAFAF8; }
 
 .footer { text-align: center; padding: 1.5rem; font-size: 12px; color: var(--border); }
 
-/* PENGINGAT AGENDA */
-.reminder-box { display: none; background: linear-gradient(135deg, #FFF8E7, #FEF3C7); border: 1.5px solid #F59E0B; border-radius: 14px; padding: 1.1rem 1.25rem; margin-bottom: 1.4rem; animation: fadeSlide 0.4s ease; }
-@keyframes fadeSlide { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
-.reminder-box.show { display: block; }
-.reminder-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.reminder-icon { font-size: 18px; }
-.reminder-title { font-size: 13px; font-weight: 600; color: #92400E; }
-.reminder-date { font-size: 11px; color: #B45309; margin-left: auto; background: rgba(245,158,11,0.15); padding: 2px 8px; border-radius: 100px; }
-.reminder-text { font-size: 13px; color: #78350F; line-height: 1.7; white-space: pre-wrap; border-top: 1px dashed #F59E0B; padding-top: 8px; margin-top: 4px; }
-.reminder-dismiss { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 12px; color: #B45309; cursor: pointer; text-decoration: underline; background: none; border: none; font-family: 'DM Sans', sans-serif; padding: 0; }
-.reminder-dismiss:hover { color: #92400E; }
+/* ═══════════════════ POPUP NOTIF & REMINDER ═══════════════════ */
+.alert-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 4000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+.alert-overlay.show { display: flex; }
+.alert-box { background: var(--surface); border-radius: 18px; width: 100%; max-width: 400px; box-shadow: 0 24px 64px rgba(0,0,0,0.25); animation: slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1); overflow: hidden; }
+.alert-head { padding: 1.5rem 1.5rem 1rem; }
+.alert-icon-wrap { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 1rem; }
+.alert-icon-wrap.notif { background: rgba(201,168,76,0.15); }
+.alert-icon-wrap.reminder { background: var(--green-light); }
+.alert-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+.alert-tag.notif { color: var(--gold); }
+.alert-tag.reminder { color: var(--green); }
+.alert-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.alert-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.alert-body { padding: 0 1.5rem 1rem; max-height: 220px; overflow-y: auto; }
+.alert-comment-box { background: rgba(201,168,76,0.08); border: 1px solid var(--gold-light); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+.alert-comment-date { font-size: 11px; color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.alert-comment-text { font-size: 13px; color: var(--dark); line-height: 1.6; }
+.alert-reminder-box { background: var(--green-light); border: 1px solid #C3DDD0; border-radius: 10px; padding: 12px 14px; }
+.alert-reminder-label { font-size: 11px; color: var(--green); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.alert-reminder-text { font-size: 13px; color: var(--dark); line-height: 1.6; }
+.alert-footer { padding: 1rem 1.5rem 1.5rem; display: flex; gap: 8px; }
+.btn-alert-primary { flex: 1; padding: 11px; background: var(--green); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.btn-alert-primary:hover { background: var(--green-mid); }
+.btn-alert-secondary { padding: 11px 18px; background: transparent; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; color: var(--muted); font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.btn-alert-secondary:hover { border-color: var(--dark); color: var(--dark); }
+.notif-badge { position: absolute; top: -4px; right: -4px; background: var(--danger); color: #fff; font-size: 10px; font-weight: 700; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--green); animation: pulse-badge 2s infinite; }
+@keyframes pulse-badge { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+.nav-btn-wrap { position: relative; display: inline-flex; }
+
+.notif-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 1rem; }
+.notif-header { background: var(--green-light); border-bottom: 1px solid #C3DDD0; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+.notif-header-title { font-size: 14px; font-weight: 600; color: var(--green); display: flex; align-items: center; gap: 8px; }
+.notif-subtext { font-size: 12px; color: var(--muted); }
+.notif-nama-wrap { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); }
+.notif-nama-wrap select { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); outline: none; appearance: none; }
+.notif-nama-wrap select:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,125,82,0.1); }
+.btn-cek-notif { width: calc(100% - 2.5rem); margin: 0.75rem 1.25rem; padding: 11px; background: var(--green); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-cek-notif:hover { background: var(--green-mid); }
+.notif-list { padding: 0.5rem 1.25rem 1.25rem; max-height: 420px; overflow-y: auto; }
+.notif-empty { text-align: center; padding: 2.5rem 1rem; color: var(--muted); font-size: 13px; }
+.notif-empty-icon { font-size: 36px; margin-bottom: 10px; }
+.notif-item { border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 10px; position: relative; }
+.notif-item.unread { border-color: var(--gold-light); background: var(--gold-pale); }
+.notif-item-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.notif-item-tag .dot-new { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); display: inline-block; }
+.notif-lap-info { font-size: 12px; color: var(--muted); margin-bottom: 8px; line-height: 1.5; }
+.notif-lap-preview { font-size: 13px; color: var(--dark); background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; line-height: 1.6; font-style: italic; max-height: 80px; overflow: hidden; position: relative; }
+.notif-lap-preview::after { content:''; position:absolute; bottom:0; left:0; right:0; height:24px; background:linear-gradient(transparent,#fff); }
+.notif-comment-box { background: rgba(26,92,58,0.07); border-left: 3px solid var(--green-mid); border-radius: 0 8px 8px 0; padding: 10px 12px; }
+.notif-comment-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 4px; }
+.notif-comment-text { font-size: 13px; color: var(--dark); line-height: 1.6; }
+.notif-comment-time { font-size: 11px; color: var(--muted); margin-top: 6px; }
+.btn-mark-read { margin-top: 10px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 7px; background: transparent; font-size: 12px; color: var(--muted); font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.btn-mark-read:hover { border-color: var(--green); color: var(--green); }
+
+/* ═══════════════════ KOMENTAR ADMIN ═══════════════════ */
+.btn-komen { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border: 1.5px solid var(--gold-light); border-radius: 7px; background: var(--gold-pale); font-size: 12px; color: #8A6A10; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; font-weight: 500; }
+.btn-komen:hover { background: var(--gold-light); border-color: var(--gold); }
+.btn-komen.has-comment { border-color: var(--green-mid); background: var(--green-light); color: var(--green); }
+.komen-inline { margin-top: 10px; display: none; }
+.komen-inline.show { display: block; }
+.komen-textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 9px; padding: 10px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); outline: none; resize: vertical; min-height: 80px; line-height: 1.6; }
+.komen-textarea:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,125,82,0.1); }
+.komen-actions { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+.btn-komen-save { padding: 7px 18px; background: var(--green); color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.btn-komen-save:hover { background: var(--green-mid); }
+.btn-komen-cancel { padding: 7px 14px; background: transparent; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--muted); font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.existing-comment { background: rgba(26,92,58,0.07); border-left: 3px solid var(--green-mid); border-radius: 0 8px 8px 0; padding: 8px 12px; margin-top: 8px; font-size: 13px; color: var(--dark); line-height: 1.6; }
+.existing-comment-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green); margin-bottom: 4px; display: flex; justify-content: space-between; }
+.komen-sending { font-size: 12px; color: var(--muted); }
 
 @media print {
   .nav-toggle, .btn-row, .dots, .progress-wrap { display: none !important; }
@@ -241,6 +335,10 @@ tr:hover td { background: #FAFAF8; }
 <!-- NAV -->
 <div class="nav-toggle">
   <button class="nav-btn active" id="nav-form" onclick="showPage('form')">📋 Form</button>
+  <div class="nav-btn-wrap">
+    <button class="nav-btn" id="nav-notif" onclick="showPage('notif')">🔔 Notifikasi</button>
+    <span class="notif-badge" id="notif-badge" style="display:none">0</span>
+  </div>
   <button class="nav-btn" id="nav-admin" onclick="showPage('admin-gate')">🔐 Admin</button>
 </div>
 
@@ -277,17 +375,6 @@ tr:hover td { background: #FAFAF8; }
           <div class="info-item"><span class="info-icon">💼</span><span class="info-label">Jabatan:</span><span class="info-val" id="info-jabatan">— pilih nama dulu —</span></div>
           <div class="info-item"><span class="info-icon">🕋</span><span class="info-label">Program:</span><span class="info-val">Marketing WMS &amp; UBR</span></div>
         </div>
-        <!-- BANNER PENGINGAT AGENDA BESOK -->
-        <div class="reminder-box" id="reminder-box">
-          <div class="reminder-header">
-            <span class="reminder-icon">🔔</span>
-            <span class="reminder-title">Pengingat Agenda Hari Ini</span>
-            <span class="reminder-date" id="reminder-date">—</span>
-          </div>
-          <div class="reminder-text" id="reminder-text">—</div>
-          <button class="reminder-dismiss" onclick="dismissReminder()">✕ Tutup pengingat ini</button>
-        </div>
-
         <div class="field">
           <label class="field-label">Nama Petugas <span class="req">*</span></label>
           <div class="nama-select-wrap">
@@ -349,11 +436,6 @@ tr:hover td { background: #FAFAF8; }
           <label class="field-label" for="catatan">Catatan Tambahan untuk Manajemen <span class="field-hint">(opsional)</span></label>
           <textarea class="ta-sm" id="catatan" placeholder="Informasi penting atau hal lain yang perlu diketahui manajemen..."></textarea>
         </div>
-        <hr class="divider">
-        <div class="field">
-          <label class="field-label" for="agenda-besok">📅 Agenda Besok <span class="field-hint">(akan muncul sebagai pengingat besok)</span></label>
-          <textarea class="ta-sm" id="agenda-besok" placeholder="Tuliskan rencana agenda untuk besok.&#10;Contoh:&#10;• Meeting dengan tim marketing pukul 09.00&#10;• Follow up proposal ke Yayasan Abdul Mukti&#10;• Survei lokasi pemasangan tiang di Griya Asri"></textarea>
-        </div>
         <div class="btn-row">
           <button class="btn-back" onclick="goBack()">← Kembali</button>
           <button class="btn-submit" onclick="submitForm()">✦ Kirim Laporan</button>
@@ -372,9 +454,35 @@ tr:hover td { background: #FAFAF8; }
         <div class="summary-item"><div class="summary-key">1 · Aktivitas Hari Ini</div><div class="summary-text" id="sum-aktivitas">—</div></div>
         <div class="summary-item"><div class="summary-key">2 · Hasil &amp; Pencapaian</div><div class="summary-text" id="sum-hasil">—</div></div>
         <div class="summary-item"><div class="summary-key">3 · Solusi / Tindak Lanjut</div><div class="summary-text" id="sum-tindak">—</div></div>
-        <div class="summary-item"><div class="summary-key">📅 Agenda Besok</div><div class="summary-text" id="sum-agenda">—</div></div>
       </div>
       <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+    </div>
+  </div>
+  <div class="footer">© UBR — Laporan Harian Internal</div>
+</div>
+
+<!-- ══════ NOTIFIKASI PAGE ══════ -->
+<div class="page" id="page-notif">
+  <div class="hero">
+    <div class="hero-badge">Kotak Masuk</div>
+    <h1 class="hero-title">Notifikasi<br><span>dari Manajemen</span></h1>
+    <p class="hero-sub">Cek komentar dan arahan dari manajemen untuk laporan Anda.</p>
+  </div>
+  <div class="container">
+    <div class="notif-panel">
+      <div class="notif-header">
+        <div class="notif-header-title">🔔 Komentar Manajemen</div>
+        <div class="notif-subtext" id="notif-update-time">—</div>
+      </div>
+      <div class="notif-nama-wrap">
+        <select id="notif-nama-sel">
+          <option value="">— Pilih nama Anda —</option>
+        </select>
+      </div>
+      <button class="btn-cek-notif" onclick="loadNotifikasi()">🔍 Cek Notifikasi Saya</button>
+      <div class="notif-list" id="notif-list">
+        <div class="notif-empty"><div class="notif-empty-icon">🔔</div>Pilih nama Anda lalu klik "Cek Notifikasi".</div>
+      </div>
     </div>
   </div>
   <div class="footer">© UBR — Laporan Harian Internal</div>
@@ -426,34 +534,29 @@ tr:hover td { background: #FAFAF8; }
         <div class="stat-card"><div class="stat-label">Total Petugas</div><div class="stat-val" id="st-jml-petugas">—</div><div class="stat-sub">terdaftar</div></div>
       </div>
 
-      <div class="table-card">
-        <div class="table-header">
-          <div class="table-title">📋 Laporan Terbaru</div>
-          <div class="table-count" id="tbl-count">—</div>
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <div class="filter-row">
+          <div class="filter-select-wrap">
+            <select id="filter-nama" onchange="applyFilter()">
+              <option value="">👤 Semua Petugas</option>
+            </select>
+          </div>
+          <div class="filter-select-wrap">
+            <select id="filter-tanggal" onchange="applyFilter()">
+              <option value="">📅 Semua Tanggal</option>
+              <option value="today">Hari Ini</option>
+              <option value="week">7 Hari Terakhir</option>
+            </select>
+          </div>
+          <button class="btn-filter-reset" onclick="resetFilter()">✕ Reset</button>
         </div>
-        <div style="padding:1rem" id="laporan-list">
-          <div class="empty-state"><div class="empty-icon">📭</div>Belum ada data laporan</div>
-        </div>
+        <div class="filter-info" id="filter-info">Memuat laporan...</div>
       </div>
 
-      <div class="table-card">
-        <div class="table-header">
-          <div class="table-title">📊 Tabel Data Lengkap</div>
-        </div>
-        <div class="tbl-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>#</th><th>Nama</th><th>Jabatan</th><th>Tanggal</th>
-                <th>Aktivitas</th><th>Hasil</th><th>Tindak Lanjut</th>
-                <th>Kendala</th><th>Catatan</th><th>Waktu Input</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-body">
-              <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📭</div>Belum ada data</div></td></tr>
-            </tbody>
-          </table>
-        </div>
+      <!-- LAPORAN CARDS -->
+      <div id="laporan-list">
+        <div class="empty-state"><div class="empty-icon">📭</div>Belum ada data laporan</div>
       </div>
     </div>
 
@@ -489,6 +592,39 @@ tr:hover td { background: #FAFAF8; }
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- POPUP NOTIFIKASI -->
+<div class="alert-overlay" id="alert-notif-overlay">
+  <div class="alert-box">
+    <div class="alert-head">
+      <div class="alert-icon-wrap notif">🔔</div>
+      <div class="alert-tag notif">Komentar Baru dari Manajemen</div>
+      <div class="alert-title" id="alert-notif-title">Ada pesan untuk Anda</div>
+      <div class="alert-sub" id="alert-notif-sub">Manajemen memberikan komentar pada laporan Anda.</div>
+    </div>
+    <div class="alert-body" id="alert-notif-body"></div>
+    <div class="alert-footer">
+      <button class="btn-alert-secondary" onclick="closeAlertNotif()">Tutup</button>
+      <button class="btn-alert-primary" onclick="goToNotifPage()">Lihat Semua Notifikasi →</button>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP PENGINGAT -->
+<div class="alert-overlay" id="alert-reminder-overlay">
+  <div class="alert-box">
+    <div class="alert-head">
+      <div class="alert-icon-wrap reminder">📌</div>
+      <div class="alert-tag reminder">Pengingat Tindak Lanjut</div>
+      <div class="alert-title">Tindak Lanjut Kemarin</div>
+      <div class="alert-sub" id="alert-reminder-sub">Ini yang Anda rencanakan kemarin. Jadikan acuan laporan hari ini.</div>
+    </div>
+    <div class="alert-body" id="alert-reminder-body"></div>
+    <div class="alert-footer">
+      <button class="btn-alert-primary" onclick="closeAlertReminder()">Oke, Lanjut Isi Laporan →</button>
+    </div>
   </div>
 </div>
 
@@ -578,9 +714,95 @@ document.getElementById('info-tgl').textContent = getTodayStr();
 
 function onNamaChange() {
   const val = document.getElementById('nama').value;
+  if (!val) { document.getElementById('info-jabatan').textContent = '— pilih nama dulu —'; return; }
+  const nama = val.split('|')[0];
+  document.getElementById('info-jabatan').textContent = val.split('|')[1];
+  // Cek notifikasi & pengingat saat nama dipilih
+  checkNotifAndReminder(nama);
+}
+
+let _allDataCache = null;
+
+async function checkNotifAndReminder(nama) {
+  try {
+    const data = _allDataCache || await loadData();
+    _allDataCache = data;
+    const readIds = getReadIds();
+
+    // ── Cek notifikasi belum dibaca ──
+    const unread = data.filter(d =>
+      d.nama === nama &&
+      d.komentar_admin && d.komentar_admin.trim() &&
+      !readIds.includes(d.waktuInput)
+    );
+
+    if (unread.length > 0) {
+      document.getElementById('alert-notif-title').textContent = 'Ada ' + unread.length + ' komentar baru untuk Anda';
+      document.getElementById('alert-notif-sub').textContent = 'Manajemen memberikan komentar pada laporan Anda. Baca sebelum mengisi laporan hari ini.';
+      document.getElementById('alert-notif-body').innerHTML = [...unread].reverse().slice(0, 3).map(d => `
+        <div class="alert-comment-box">
+          <div class="alert-comment-date">📅 ${d.hariTanggal || d.tglRaw} · ${d.waktu_komentar || ''}</div>
+          <div class="alert-comment-text">${escHtml(d.komentar_admin).replace(/\n/g,'<br>')}</div>
+        </div>`).join('');
+      document.getElementById('alert-notif-overlay').classList.add('show');
+      // Reminder akan muncul setelah notif ditutup (di closeAlertNotif)
+    } else {
+      // Tidak ada notif baru, langsung cek reminder
+      checkReminder(nama, data);
+    }
+
+  } catch(e) { console.error(e); }
+}
+
+function checkReminder(nama, data) {
+  const today = getTodayRaw(); // format: 2026-06-25
+  // Cari laporan terakhir milik petugas SEBELUM hari ini
+  // tglRaw bisa berformat '2026-06-24' atau '2026-06-24T17:00:00.000Z'
+  const laporanLalu = [...data]
+    .filter(d => {
+      if (d.nama !== nama) return false;
+      if (!d.tindakLanjut || !d.tindakLanjut.trim()) return false;
+      const tgl = d.tglRaw ? d.tglRaw.slice(0, 10) : '';
+      return tgl && tgl < today;
+    })
+    .sort((a, b) => b.tglRaw.slice(0,10).localeCompare(a.tglRaw.slice(0,10)));
+
+  if (laporanLalu.length > 0) {
+    const lap = laporanLalu[0];
+    document.getElementById('alert-reminder-sub').textContent =
+      'Laporan ' + (lap.hariTanggal || lap.tglRaw.slice(0,10)) + ' · Jadikan acuan untuk hari ini.';
+    document.getElementById('alert-reminder-body').innerHTML = `
+      <div class="alert-reminder-box">
+        <div class="alert-reminder-label">📌 Rencana Tindak Lanjut</div>
+        <div class="alert-reminder-text">${escHtml(lap.tindakLanjut).replace(/\n/g,'<br>')}</div>
+      </div>`;
+    document.getElementById('alert-reminder-overlay').classList.add('show');
+  }
+}
+
+function closeAlertNotif() {
+  document.getElementById('alert-notif-overlay').classList.remove('show');
+  // Setelah tutup notif, tampilkan reminder
+  const val = document.getElementById('nama').value;
+  if (val && _allDataCache) checkReminder(val.split('|')[0], _allDataCache);
+}
+
+function closeAlertReminder() {
+  document.getElementById('alert-reminder-overlay').classList.remove('show');
+}
+
+function goToNotifPage() {
+  document.getElementById('alert-notif-overlay').classList.remove('show');
+  const val = document.getElementById('nama').value;
   const nama = val ? val.split('|')[0] : '';
-  document.getElementById('info-jabatan').textContent = val ? val.split('|')[1] : '— pilih nama dulu —';
-  checkAndShowReminder(nama);
+  showPage('notif');
+  if (nama) {
+    setTimeout(() => {
+      const sel = document.getElementById('notif-nama-sel');
+      sel.value = nama;
+      loadNotifikasi();
+    }, 100);
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -593,6 +815,10 @@ function showPage(name) {
     document.getElementById('page-form').classList.add('active');
     document.getElementById('nav-form').classList.add('active');
     populateNamaSelect();
+  } else if (name === 'notif') {
+    document.getElementById('page-notif').classList.add('active');
+    document.getElementById('nav-notif').classList.add('active');
+    populateNotifSelect();
   } else if (name === 'admin-gate') {
     document.getElementById('page-admin-gate').classList.add('active');
     document.getElementById('nav-admin').classList.add('active');
@@ -831,72 +1057,12 @@ function goBack() {
 }
 
 // ══════════════════════════════════════════════
-// AGENDA BESOK — localStorage per nama
-// ══════════════════════════════════════════════
-const LS_AGENDA = 'ubr_agenda_v1';
-
-function saveAgenda(nama, agenda, tglBesok) {
-  try {
-    const all = JSON.parse(localStorage.getItem(LS_AGENDA) || '{}');
-    all[nama] = { agenda, tglBesok, dismissed: false };
-    localStorage.setItem(LS_AGENDA, JSON.stringify(all));
-  } catch(e) {}
-}
-
-function getAgenda(nama) {
-  try {
-    const all = JSON.parse(localStorage.getItem(LS_AGENDA) || '{}');
-    return all[nama] || null;
-  } catch { return null; }
-}
-
-function dismissReminder() {
-  document.getElementById('reminder-box').classList.remove('show');
-  // Tandai sudah dibaca
-  const nama = document.getElementById('nama').value.split('|')[0];
-  if (!nama) return;
-  try {
-    const all = JSON.parse(localStorage.getItem(LS_AGENDA) || '{}');
-    if (all[nama]) { all[nama].dismissed = true; localStorage.setItem(LS_AGENDA, JSON.stringify(all)); }
-  } catch(e) {}
-}
-
-function checkAndShowReminder(nama) {
-  const box = document.getElementById('reminder-box');
-  box.classList.remove('show');
-  if (!nama) return;
-
-  const data = getAgenda(nama);
-  if (!data || !data.agenda || data.dismissed) return;
-
-  const today = getTodayRaw();
-  // Tampilkan jika agenda ini memang untuk hari ini
-  if (data.tglBesok !== today) return;
-
-  document.getElementById('reminder-text').textContent = data.agenda;
-  // Format tanggal lebih ramah
-  const d = new Date(today + 'T00:00:00');
-  document.getElementById('reminder-date').textContent = HARI[d.getDay()] + ', ' + d.getDate() + ' ' + BULAN[d.getMonth()];
-  box.classList.add('show');
-}
-
-// ══════════════════════════════════════════════
 // SUBMIT
 // ══════════════════════════════════════════════
 async function submitForm() {
   if (!validateStep(2)) return;
   const namaVal = document.getElementById('nama').value;
   const [nama, jabatan] = namaVal.split('|');
-  const agendaBesok = document.getElementById('agenda-besok').value.trim();
-
-  // Hitung tanggal besok
-  const besok = new Date();
-  besok.setDate(besok.getDate() + 1);
-  const tglBesok = besok.toISOString().slice(0, 10);
-
-  // Simpan agenda besok ke localStorage
-  if (agendaBesok) saveAgenda(nama, agendaBesok, tglBesok);
-
   const payload = {
     waktuInput: new Date().toLocaleString('id-ID'),
     nama, jabatan,
@@ -907,21 +1073,14 @@ async function submitForm() {
     tindakLanjut: document.getElementById('tindak-lanjut').value.trim(),
     kendala: document.getElementById('kendala').value.trim(),
     catatan: document.getElementById('catatan').value.trim(),
-    agendaBesok,
   };
   document.getElementById('step-2').classList.remove('active');
   document.getElementById('progress-wrap').style.display = 'none';
-  const sc = document.getElementById('success-screen');
-  sc.classList.add('show');
+  document.getElementById('success-screen').classList.add('show');
   document.getElementById('sum-header').textContent = nama + ' · ' + jabatan + ' · ' + getTodayStr();
   document.getElementById('sum-aktivitas').textContent = payload.aktivitas;
   document.getElementById('sum-hasil').textContent = payload.hasil;
   document.getElementById('sum-tindak').textContent = payload.tindakLanjut;
-
-  // Tampilkan agenda besok di success jika ada
-  const agSum = document.getElementById('sum-agenda');
-  if (agSum) agSum.textContent = agendaBesok || '(tidak ada agenda)';
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
   try {
     await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
@@ -937,47 +1096,131 @@ async function loadData() {
 
 async function renderDashboard() {
   const data = await loadData();
+  _allDataCache = data;
   const n = data.length;
   document.getElementById('admin-sub').textContent = n + ' laporan · Diperbarui: ' + new Date().toLocaleString('id-ID');
   document.getElementById('st-total').textContent = n || '—';
-  document.getElementById('tbl-count').textContent = n + ' laporan';
   const today = getTodayRaw();
-  const ptgsHariIni = new Set(data.filter(d => d.tglRaw === today).map(d => d.nama)).size;
+  const ptgsHariIni = new Set(data.filter(d => (d.tglRaw||'').slice(0,10) === today).map(d => d.nama)).size;
   const adaKendala = data.filter(d => d.kendala && d.kendala.trim()).length;
   document.getElementById('st-petugas').textContent = ptgsHariIni || '—';
   document.getElementById('st-kendala').textContent = adaKendala || '—';
   document.getElementById('st-jml-petugas').textContent = getPetugas().length || '—';
 
-  const lDiv = document.getElementById('laporan-list');
-  if (!n) { lDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>Belum ada laporan</div>'; }
-  else {
-    lDiv.innerHTML = [...data].reverse().slice(0,20).map(d => `
-      <div class="laporan-card">
-        <div class="laporan-card-header">
-          <div><div class="laporan-nama">${d.nama||'—'}</div><div class="laporan-meta">${d.jabatan||''}</div></div>
-          <div class="laporan-meta">${d.hariTanggal||d.tglRaw||'—'}</div>
-        </div>
-        <div class="laporan-section"><div class="laporan-section-title">1 · Aktivitas Hari Ini</div><div class="laporan-section-text">${(d.aktivitas||'—').replace(/\n/g,'<br>')}</div></div>
-        <div class="laporan-section"><div class="laporan-section-title">2 · Hasil &amp; Pencapaian</div><div class="laporan-section-text">${(d.hasil||'—').replace(/\n/g,'<br>')}</div></div>
-        <div class="laporan-section"><div class="laporan-section-title">3 · Solusi / Tindak Lanjut</div><div class="laporan-section-text">${(d.tindakLanjut||'—').replace(/\n/g,'<br>')}</div></div>
-        ${d.kendala?`<div class="laporan-section"><div class="laporan-section-title" style="color:#C0392B">⚡ Kendala</div><div class="laporan-section-text">${d.kendala.replace(/\n/g,'<br>')}</div></div>`:''}
-      </div>`).join('');
+  // Isi filter nama
+  const filterNama = document.getElementById('filter-nama');
+  const curFilter = filterNama.value;
+  filterNama.innerHTML = '<option value="">👤 Semua Petugas</option>';
+  const namaList = [...new Set(data.map(d => d.nama).filter(Boolean))].sort();
+  namaList.forEach(nm => {
+    const o = document.createElement('option');
+    o.value = nm; o.textContent = nm;
+    filterNama.appendChild(o);
+  });
+  if (curFilter) filterNama.value = curFilter;
+
+  applyFilter();
+}
+
+function applyFilter() {
+  const data = _allDataCache || [];
+  const filterNama = document.getElementById('filter-nama').value;
+  const filterTgl = document.getElementById('filter-tanggal').value;
+  const today = getTodayRaw();
+
+  let filtered = [...data].reverse();
+  if (filterNama) filtered = filtered.filter(d => d.nama === filterNama);
+  if (filterTgl === 'today') filtered = filtered.filter(d => (d.tglRaw||'').slice(0,10) === today);
+  if (filterTgl === 'week') {
+    const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
+    filtered = filtered.filter(d => new Date((d.tglRaw||'').slice(0,10)) >= weekAgo);
   }
 
-  const tbody = document.getElementById('tbl-body');
-  if (!n) { tbody.innerHTML = '<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📭</div>Belum ada data</div></td></tr>'; return; }
-  tbody.innerHTML = [...data].reverse().map((d,i) => `<tr>
-    <td style="color:var(--muted)">${n-i}</td>
-    <td style="font-weight:500;white-space:nowrap">${d.nama||'—'}</td>
-    <td style="white-space:nowrap">${d.jabatan||'—'}</td>
-    <td style="white-space:nowrap">${d.hariTanggal||d.tglRaw||'—'}</td>
-    <td class="td-wrap">${(d.aktivitas||'—').replace(/\n/g,'<br>')}</td>
-    <td class="td-wrap">${(d.hasil||'—').replace(/\n/g,'<br>')}</td>
-    <td class="td-wrap">${(d.tindakLanjut||'—').replace(/\n/g,'<br>')}</td>
-    <td class="td-wrap">${d.kendala||'—'}</td>
-    <td class="td-wrap">${d.catatan||'—'}</td>
-    <td style="color:var(--muted);font-size:11px;white-space:nowrap">${d.waktuInput||'—'}</td>
-  </tr>`).join('');
+  document.getElementById('filter-info').textContent =
+    'Menampilkan ' + filtered.length + ' dari ' + data.length + ' laporan';
+
+  const lDiv = document.getElementById('laporan-list');
+  if (!filtered.length) {
+    lDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>Tidak ada laporan ditemukan</div>';
+    return;
+  }
+
+  lDiv.innerHTML = filtered.map((d, idx) => {
+    const origIdx = data.length - 1 - data.indexOf(d);
+    // Karena data sudah di-reverse, cari index asli
+    const realIdx = data.findIndex(x => x.waktuInput === d.waktuInput);
+    const hasComment = d.komentar_admin && d.komentar_admin.trim();
+    const inisial = (d.nama||'?').charAt(0).toUpperCase();
+    const tglTampil = formatTgl(d.tglRaw, d.hariTanggal);
+
+    return `
+    <div class="lap-card" id="lcard-${realIdx}">
+      <div class="lap-card-head">
+        <div class="lap-avatar">${inisial}</div>
+        <div class="lap-head-info">
+          <div class="lap-nama">${escHtml(d.nama||'—')}</div>
+          <div class="lap-meta">${escHtml(d.jabatan||'')}</div>
+        </div>
+        <div class="lap-tanggal">📅 ${tglTampil}</div>
+      </div>
+
+      <div class="lap-body">
+        <div class="lap-section">
+          <div class="lap-section-label">Aktivitas Hari Ini</div>
+          <div class="lap-section-text">${(d.aktivitas||'—').replace(/\n/g,'<br>')}</div>
+        </div>
+        <div class="lap-section">
+          <div class="lap-section-label">Hasil &amp; Pencapaian</div>
+          <div class="lap-section-text">${(d.hasil||'—').replace(/\n/g,'<br>')}</div>
+        </div>
+        <div class="lap-section">
+          <div class="lap-section-label">Tindak Lanjut</div>
+          <div class="lap-section-text">${(d.tindakLanjut||'—').replace(/\n/g,'<br>')}</div>
+        </div>
+        ${d.kendala && d.kendala.trim() ? `
+        <div class="lap-kendala">
+          <div class="lap-kendala-label">⚡ Kendala</div>
+          <div class="lap-section-text">${escHtml(d.kendala).replace(/\n/g,'<br>')}</div>
+        </div>` : ''}
+        ${d.catatan && d.catatan.trim() ? `
+        <div class="lap-section" style="margin-top:10px">
+          <div class="lap-section-label">Catatan</div>
+          <div class="lap-section-text">${escHtml(d.catatan).replace(/\n/g,'<br>')}</div>
+        </div>` : ''}
+      </div>
+
+      <div class="lap-footer">
+        <div class="lap-waktu">⏱ Dikirim: ${escHtml(d.waktuInput||'—')}</div>
+        ${hasComment ? `<div class="existing-comment"><div class="existing-comment-label"><span>💬 Komentar Admin</span><span style="font-weight:400;color:var(--muted)">${escHtml(d.waktu_komentar||'')}</span></div>${escHtml(d.komentar_admin)}</div>` : ''}
+        <button class="btn-komen ${hasComment?'has-comment':''}" onclick="toggleKomen(${realIdx})" id="btn-komen-${realIdx}">
+          ${hasComment ? '✏️ Edit Komentar' : '💬 Beri Komentar'}
+        </button>
+        <div class="komen-inline" id="komen-inline-${realIdx}">
+          <textarea class="komen-textarea" id="komen-text-${realIdx}" placeholder="Tulis arahan atau komentar untuk ${escHtml(d.nama||'')}...">${escHtml(d.komentar_admin||'')}</textarea>
+          <div class="komen-actions">
+            <button class="btn-komen-save" onclick="saveKomen(${realIdx}, '${escHtml(d.waktuInput||'')}')">💾 Simpan</button>
+            <button class="btn-komen-cancel" onclick="toggleKomen(${realIdx})">Batal</button>
+            <span class="komen-sending" id="komen-status-${realIdx}"></span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function formatTgl(tglRaw, hariTanggal) {
+  if (hariTanggal && hariTanggal.trim() && !hariTanggal.includes('T')) return hariTanggal;
+  if (!tglRaw) return '—';
+  try {
+    const d = new Date(tglRaw);
+    return HARI[d.getDay()] + ', ' + d.getDate() + ' ' + BULAN[d.getMonth()] + ' ' + d.getFullYear();
+  } catch { return tglRaw; }
+}
+
+function resetFilter() {
+  document.getElementById('filter-nama').value = '';
+  document.getElementById('filter-tanggal').value = '';
+  applyFilter();
 }
 
 async function exportCSV() {
@@ -993,6 +1236,138 @@ async function exportCSV() {
 }
 
 // ══════════════════════════════════════════════
+// KOMENTAR ADMIN
+// ══════════════════════════════════════════════
+let _cachedData = [];
+
+function toggleKomen(idx) {
+  const box = document.getElementById('komen-inline-' + idx);
+  box.classList.toggle('show');
+}
+
+async function saveKomen(idx, waktuInput) {
+  const text = document.getElementById('komen-text-' + idx).value.trim();
+  const statusEl = document.getElementById('komen-status-' + idx);
+  if (!text) { showToast('⚠️ Komentar tidak boleh kosong'); return; }
+  statusEl.textContent = '⏳ Menyimpan...';
+  const payload = {
+    action: 'komentar',
+    waktuInput: waktuInput,
+    komentar_admin: text,
+    waktu_komentar: new Date().toLocaleString('id-ID'),
+  };
+  try {
+    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    statusEl.textContent = '';
+    document.getElementById('komen-inline-' + idx).classList.remove('show');
+    document.getElementById('btn-komen-' + idx).textContent = '✏️ Edit Komentar';
+    document.getElementById('btn-komen-' + idx).classList.add('has-comment');
+    showToast('✅ Komentar berhasil dikirim ke petugas');
+    // Refresh dashboard setelah 1.5s agar data terbaru tampil
+    setTimeout(() => renderDashboard(), 1500);
+  } catch(e) {
+    statusEl.textContent = '❌ Gagal menyimpan';
+    console.error(e);
+  }
+}
+
+// ══════════════════════════════════════════════
+// NOTIFIKASI PETUGAS
+// ══════════════════════════════════════════════
+const LS_READ_KEY = 'ubr_read_notif_v1';
+
+function populateNotifSelect() {
+  const sel = document.getElementById('notif-nama-sel');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Pilih nama Anda —</option>';
+  getPetugas().forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.nama;
+    opt.textContent = p.nama;
+    sel.appendChild(opt);
+  });
+  if (cur) sel.value = cur;
+}
+
+function getReadIds() {
+  try { return JSON.parse(localStorage.getItem(LS_READ_KEY) || '[]'); } catch { return []; }
+}
+function markAsRead(id) {
+  const ids = getReadIds();
+  if (!ids.includes(id)) { ids.push(id); localStorage.setItem(LS_READ_KEY, JSON.stringify(ids)); }
+}
+
+async function loadNotifikasi() {
+  const nama = document.getElementById('notif-nama-sel').value;
+  if (!nama) { showToast('⚠️ Pilih nama Anda terlebih dahulu'); return; }
+  const listEl = document.getElementById('notif-list');
+  listEl.innerHTML = '<div class="notif-empty"><div class="notif-empty-icon">⏳</div>Memuat notifikasi...</div>';
+  document.getElementById('notif-update-time').textContent = '—';
+  const data = await loadData();
+  const milik = data.filter(d => d.nama === nama && d.komentar_admin && d.komentar_admin.trim());
+  document.getElementById('notif-update-time').textContent = 'Diperbarui: ' + new Date().toLocaleString('id-ID');
+  const readIds = getReadIds();
+  const unread = milik.filter(d => !readIds.includes(d.waktuInput));
+  // Update badge
+  updateNotifBadge(nama, data);
+  if (!milik.length) {
+    listEl.innerHTML = '<div class="notif-empty"><div class="notif-empty-icon">📭</div>Belum ada komentar dari manajemen untuk laporan Anda.</div>';
+    return;
+  }
+  listEl.innerHTML = [...milik].reverse().map(d => {
+    const isUnread = !readIds.includes(d.waktuInput);
+    return `<div class="notif-item ${isUnread?'unread':''}" id="nitem-${d.waktuInput}">
+      <div class="notif-item-tag">${isUnread?'<span class="dot-new"></span>Baru':'Sudah dibaca'}</div>
+      <div class="notif-lap-info">📅 ${d.hariTanggal||d.tglRaw||'—'}</div>
+      <div class="notif-lap-preview">${(d.aktivitas||'—').replace(/\n/g,' ')}</div>
+      <div class="notif-comment-box">
+        <div class="notif-comment-label">💬 Komentar Manajemen</div>
+        <div class="notif-comment-text">${escHtml(d.komentar_admin).replace(/\n/g,'<br>')}</div>
+        ${d.waktu_komentar ? `<div class="notif-comment-time">⏰ ${escHtml(d.waktu_komentar)}</div>` : ''}
+      </div>
+      ${isUnread ? `<button class="btn-mark-read" onclick="tandaiDibaca('${escHtml(d.waktuInput)}')">✓ Tandai sudah dibaca</button>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function tandaiDibaca(id) {
+  markAsRead(id);
+  const el = document.getElementById('nitem-' + id);
+  if (el) {
+    el.classList.remove('unread');
+    el.querySelector('.notif-item-tag').innerHTML = 'Sudah dibaca';
+    const btn = el.querySelector('.btn-mark-read');
+    if (btn) btn.remove();
+  }
+  const nama = document.getElementById('notif-nama-sel').value;
+  loadData().then(data => updateNotifBadge(nama, data));
+}
+
+async function updateNotifBadge(nama, data) {
+  if (!nama) { document.getElementById('notif-badge').style.display='none'; return; }
+  const readIds = getReadIds();
+  const unreadCount = data.filter(d => d.nama === nama && d.komentar_admin && d.komentar_admin.trim() && !readIds.includes(d.waktuInput)).length;
+  const badge = document.getElementById('notif-badge');
+  if (unreadCount > 0) { badge.style.display='flex'; badge.textContent = unreadCount; }
+  else { badge.style.display='none'; }
+}
+
+async function checkUnreadOnLoad() {
+  // Cek notifikasi unread untuk semua petugas yang ada di localStorage
+  try {
+    const data = await loadData();
+    if (!data.length) return;
+    const readIds = getReadIds();
+    const unread = data.filter(d => d.komentar_admin && d.komentar_admin.trim() && !readIds.includes(d.waktuInput));
+    if (unread.length > 0) {
+      const badge = document.getElementById('notif-badge');
+      badge.style.display = 'flex';
+      badge.textContent = unread.length;
+    }
+  } catch(e) { /* silent */ }
+}
+
+// ══════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════
 // Keyboard shortcut modal
@@ -1000,6 +1375,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 
 updateProgress();
 populateNamaSelect();
+checkUnreadOnLoad();
 </script>
 </body>
 </html>
