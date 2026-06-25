@@ -19,7 +19,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(
 .nav-toggle { position: fixed; top: 14px; right: 16px; z-index: 999; display: flex; gap: 6px; background: var(--green); border-radius: 100px; padding: 6px 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .nav-btn { background: transparent; border: none; color: rgba(255,255,255,0.6); font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 10px; border-radius: 100px; transition: all 0.2s; }
 .nav-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
-
 .page { display: none; }
 .page.active { display: block; }
 
@@ -46,7 +45,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(
 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
 .dot.active { background: var(--green); width: 24px; border-radius: 4px; }
 .dot.done { background: var(--gold); }
-
 .step { display: none; }
 .step.active { display: block; }
 
@@ -57,7 +55,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(
 .eyebrow-num { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1px; }
 .eyebrow-title { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600; color: var(--dark); }
 
-/* INFO STRIP — tanggal/jabatan otomatis */
+/* INFO STRIP */
 .info-strip { background: var(--green-light); border: 1px solid #C3DDD0; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 10px 24px; }
 .info-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
 .info-icon { font-size: 15px; }
@@ -81,13 +79,8 @@ textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; 
 textarea:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,125,82,0.1); }
 textarea.error { border-color: var(--danger) !important; }
 .ta-sm { min-height: 90px; }
-.ta-md { min-height: 120px; }
 .ta-lg { min-height: 150px; }
-
-/* DIVIDER */
 .divider { border: none; border-top: 1px dashed var(--border); margin: 1.5rem 0; }
-
-/* ERROR */
 .field-err { font-size: 12px; color: var(--danger); margin-top: 5px; display: none; }
 
 /* BUTTONS */
@@ -112,26 +105,41 @@ textarea.error { border-color: var(--danger) !important; }
 .summary-item:last-child { border-bottom: none; }
 .summary-key { font-weight: 500; color: var(--dark); margin-bottom: 3px; }
 .summary-text { color: var(--muted); line-height: 1.6; }
-.btn-print { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border: 1.5px solid var(--green); border-radius: 10px; color: var(--green); font-size: 14px; font-family: 'DM Sans', sans-serif; background: transparent; cursor: pointer; transition: all 0.2s; }
+.btn-print { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border: 1.5px solid var(--green); border-radius: 10px; color: var(--green); font-size: 14px; font-family: 'DM Sans', sans-serif; background: transparent; cursor: pointer; }
 .btn-print:hover { background: var(--green-light); }
 
-/* ADMIN */
+/* ═══════════════════ ADMIN ═══════════════════ */
 .admin-page { padding: 0; }
-.admin-hero { background: var(--green); padding: 2.5rem 2rem 2rem; }
-.admin-hero-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }
+.admin-hero { background: var(--green); padding: 2.5rem 2rem 0; }
+.admin-hero-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; padding-bottom: 0; }
 .admin-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 4px; }
 .admin-sub { font-size: 13px; color: rgba(255,255,255,0.6); }
-.admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.admin-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 .btn-export { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 8px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; border: none; }
 .btn-csv { background: var(--gold); color: #1A1100; }
 .btn-csv:hover { background: var(--gold-light); }
+.btn-ghost { background: rgba(255,255,255,0.15); color:#fff; border: 1px solid rgba(255,255,255,0.25) !important; }
+.btn-ghost:hover { background: rgba(255,255,255,0.25); }
+
+/* ADMIN TABS */
+.admin-tabs { max-width: 1000px; margin: 0 auto; display: flex; gap: 0; padding: 1.5rem 0 0; }
+.admin-tab { padding: 10px 22px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: rgba(255,255,255,0.6); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none; }
+.admin-tab.active { color: #fff; border-bottom-color: var(--gold); }
+.admin-tab:hover { color: rgba(255,255,255,0.9); }
+
 .admin-body { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1.5rem 4rem; }
+.admin-panel { display: none; }
+.admin-panel.active { display: block; }
+
+/* STATS */
 .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
 .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; }
 .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
 .stat-val { font-size: 28px; font-weight: 500; color: var(--dark); line-height: 1; }
 .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
 .stat-green .stat-val { color: var(--green-mid); }
+
+/* TABLE */
 .table-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
 .table-header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .table-title { font-size: 13px; font-weight: 500; }
@@ -139,13 +147,13 @@ textarea.error { border-color: var(--danger) !important; }
 .tbl-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { background: var(--gold-pale); color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; padding: 10px 12px; text-align: left; white-space: nowrap; }
-td { padding: 9px 12px; border-top: 1px solid var(--border); color: var(--dark); vertical-align: top; max-width: 220px; }
-td.td-wrap { white-space: normal; word-break: break-word; line-height: 1.5; }
+td { padding: 9px 12px; border-top: 1px solid var(--border); color: var(--dark); vertical-align: top; }
+td.td-wrap { white-space: normal; word-break: break-word; line-height: 1.5; max-width: 200px; }
 tr:hover td { background: #FAFAF8; }
 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 14px; }
 .empty-icon { font-size: 40px; margin-bottom: 12px; }
 
-/* LAPORAN CARD di dashboard */
+/* LAPORAN CARDS */
 .laporan-card { border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 12px; }
 .laporan-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px; }
 .laporan-nama { font-weight: 600; font-size: 15px; }
@@ -153,6 +161,44 @@ tr:hover td { background: #FAFAF8; }
 .laporan-section { margin-bottom: 10px; }
 .laporan-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); font-weight: 500; margin-bottom: 4px; }
 .laporan-section-text { font-size: 13px; color: var(--dark); line-height: 1.6; }
+
+/* ═══ MANAJEMEN PETUGAS ═══ */
+.petugas-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); }
+.petugas-toolbar-title { font-size: 13px; font-weight: 500; }
+.btn-add-petugas { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--green); color: #fff; border: none; border-radius: 8px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.btn-add-petugas:hover { background: var(--green-mid); }
+
+.petugas-list { padding: 0.5rem 1.25rem 1rem; }
+.petugas-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border); }
+.petugas-row:last-child { border-bottom: none; }
+.petugas-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green-light); border: 2px solid var(--green-mid); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; color: var(--green); flex-shrink: 0; }
+.petugas-info { flex: 1; min-width: 0; }
+.petugas-nama-text { font-weight: 500; font-size: 14px; color: var(--dark); }
+.petugas-jabatan-text { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.petugas-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.btn-edit-p { padding: 5px 12px; border: 1.5px solid var(--border); border-radius: 7px; background: transparent; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--dark); cursor: pointer; transition: all 0.2s; }
+.btn-edit-p:hover { border-color: var(--green); color: var(--green); }
+.btn-del-p { padding: 5px 10px; border: 1.5px solid #FEE2E2; border-radius: 7px; background: transparent; font-size: 12px; color: var(--danger); cursor: pointer; transition: all 0.2s; }
+.btn-del-p:hover { background: #FEE2E2; }
+.petugas-empty { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: 13px; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(3px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1rem; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--surface); border-radius: 16px; padding: 2rem; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: slideUp 0.25s ease; }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; margin-bottom: 1.5rem; }
+.modal-field { margin-bottom: 1.1rem; }
+.modal-label { display: block; font-size: 13px; font-weight: 500; color: var(--dark); margin-bottom: 6px; }
+.modal-input { width: 100%; border: 1.5px solid var(--border); border-radius: 9px; padding: 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--white); outline: none; transition: border-color 0.2s; }
+.modal-input:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,125,82,0.1); }
+.modal-input.err { border-color: var(--danger); }
+.modal-err { font-size: 12px; color: var(--danger); margin-top: 4px; display: none; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1.5rem; }
+.btn-modal-cancel { padding: 10px 20px; border: 1.5px solid var(--border); border-radius: 9px; background: transparent; color: var(--muted); font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.btn-modal-cancel:hover { border-color: var(--dark); color: var(--dark); }
+.btn-modal-save { padding: 10px 24px; background: var(--green); border: none; border-radius: 9px; color: #fff; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+.btn-modal-save:hover { background: var(--green-mid); }
 
 /* GATE */
 .gate { max-width: 400px; margin: 6rem auto; padding: 0 1.5rem; text-align: center; }
@@ -165,7 +211,23 @@ tr:hover td { background: #FAFAF8; }
 .gate-err { font-size: 13px; color: var(--danger); margin-top: 8px; display: none; }
 .gate-hint { font-size: 11px; color: var(--muted); margin-top: 1rem; }
 
+/* TOAST */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--dark); color: #fff; padding: 11px 22px; border-radius: 100px; font-size: 13px; font-weight: 500; z-index: 3000; transition: transform 0.3s ease; white-space: nowrap; pointer-events: none; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+
 .footer { text-align: center; padding: 1.5rem; font-size: 12px; color: var(--border); }
+
+/* PENGINGAT AGENDA */
+.reminder-box { display: none; background: linear-gradient(135deg, #FFF8E7, #FEF3C7); border: 1.5px solid #F59E0B; border-radius: 14px; padding: 1.1rem 1.25rem; margin-bottom: 1.4rem; animation: fadeSlide 0.4s ease; }
+@keyframes fadeSlide { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+.reminder-box.show { display: block; }
+.reminder-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.reminder-icon { font-size: 18px; }
+.reminder-title { font-size: 13px; font-weight: 600; color: #92400E; }
+.reminder-date { font-size: 11px; color: #B45309; margin-left: auto; background: rgba(245,158,11,0.15); padding: 2px 8px; border-radius: 100px; }
+.reminder-text { font-size: 13px; color: #78350F; line-height: 1.7; white-space: pre-wrap; border-top: 1px dashed #F59E0B; padding-top: 8px; margin-top: 4px; }
+.reminder-dismiss { display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; font-size: 12px; color: #B45309; cursor: pointer; text-decoration: underline; background: none; border: none; font-family: 'DM Sans', sans-serif; padding: 0; }
+.reminder-dismiss:hover { color: #92400E; }
 
 @media print {
   .nav-toggle, .btn-row, .dots, .progress-wrap { display: none !important; }
@@ -189,7 +251,6 @@ tr:hover td { background: #FAFAF8; }
     <h1 class="hero-title">Laporan Harian<br><span>Petugas UBR</span></h1>
     <p class="hero-sub">Isi laporan kegiatan harian Anda setiap hari dengan lengkap dan jujur.</p>
   </div>
-
   <div class="container">
     <div class="progress-wrap" id="progress-wrap">
       <div class="progress-meta">
@@ -204,19 +265,27 @@ tr:hover td { background: #FAFAF8; }
       </div>
     </div>
 
-    <!-- STEP 1: Identitas -->
+    <!-- STEP 1 -->
     <div class="step active" id="step-0">
       <div class="card">
         <div class="section-eyebrow">
           <div class="eyebrow-icon">👤</div>
           <div><div class="eyebrow-num">Langkah 01</div><div class="eyebrow-title">Identitas Petugas</div></div>
         </div>
-
-        <!-- Info otomatis -->
-        <div class="info-strip" id="info-strip">
+        <div class="info-strip">
           <div class="info-item"><span class="info-icon">📅</span><span class="info-label">Hari, Tanggal:</span><span class="info-val" id="info-tgl">—</span></div>
           <div class="info-item"><span class="info-icon">💼</span><span class="info-label">Jabatan:</span><span class="info-val" id="info-jabatan">— pilih nama dulu —</span></div>
           <div class="info-item"><span class="info-icon">🕋</span><span class="info-label">Program:</span><span class="info-val">Marketing WMS &amp; UBR</span></div>
+        </div>
+        <!-- BANNER PENGINGAT AGENDA BESOK -->
+        <div class="reminder-box" id="reminder-box">
+          <div class="reminder-header">
+            <span class="reminder-icon">🔔</span>
+            <span class="reminder-title">Pengingat Agenda Hari Ini</span>
+            <span class="reminder-date" id="reminder-date">—</span>
+          </div>
+          <div class="reminder-text" id="reminder-text">—</div>
+          <button class="reminder-dismiss" onclick="dismissReminder()">✕ Tutup pengingat ini</button>
         </div>
 
         <div class="field">
@@ -224,51 +293,34 @@ tr:hover td { background: #FAFAF8; }
           <div class="nama-select-wrap">
             <select id="nama" onchange="onNamaChange()">
               <option value="">— Pilih nama Anda —</option>
-              <!-- ✏️ TAMBAH/UBAH NAMA DAN JABATAN DI SINI -->
-              <option value="Rohman|Marketing WMS &amp; UBR">Rohman</option>
-              <option value="Ahmad|Pembimbing Ibadah">Ahmad</option>
-              <option value="Siti Fatimah|Koordinator Lapangan">Siti Fatimah</option>
-              <option value="Budi Santoso|Petugas Logistik">Budi Santoso</option>
-              <option value="Hasan|Ketua Rombongan">Hasan</option>
-              <!-- Tambahkan nama lain di sini dengan format: value="NamaLengkap|Jabatan" -->
             </select>
           </div>
           <div class="field-err" id="err-nama">Nama wajib dipilih.</div>
         </div>
-
         <div class="btn-row">
           <button class="btn-next" onclick="goNext()">Lanjut →</button>
         </div>
       </div>
     </div>
 
-    <!-- STEP 2: Aktivitas & Hasil -->
+    <!-- STEP 2 -->
     <div class="step" id="step-1">
       <div class="card">
         <div class="section-eyebrow">
           <div class="eyebrow-icon">1️⃣</div>
-          <div><div class="eyebrow-num">Langkah 02</div><div class="eyebrow-title">Aktivitas & Hasil</div></div>
+          <div><div class="eyebrow-num">Langkah 02</div><div class="eyebrow-title">Aktivitas &amp; Hasil</div></div>
         </div>
-
         <div class="field">
           <label class="field-label" for="aktivitas">Aktivitas Hari Ini <span class="req">*</span><span class="field-hint">— apa saja yang dilakukan?</span></label>
-          <textarea class="ta-lg" id="aktivitas" placeholder="Tuliskan semua aktivitas yang dilakukan hari ini secara rinci. Contoh:
-• Kunjungan ke Sekolah Putera Harapan, penawaran WMS dan paket Umroh.
-• Konfirmasi pemasangan tiang di Griya Asri Kebumen.
-• Penawaran WiFi home di wilayah Beji."></textarea>
+          <textarea class="ta-lg" id="aktivitas" placeholder="Tuliskan semua aktivitas yang dilakukan hari ini secara rinci.&#10;Contoh:&#10;• Kunjungan ke Sekolah Putera Harapan, penawaran WMS dan paket Umroh.&#10;• Konfirmasi pemasangan tiang di Griya Asri Kebumen."></textarea>
           <div class="field-err" id="err-aktivitas">Aktivitas hari ini wajib diisi.</div>
         </div>
-
         <hr class="divider">
-
         <div class="field">
           <label class="field-label" for="hasil">Hasil &amp; Pencapaian <span class="req">*</span><span class="field-hint">— apa yang berhasil dicapai?</span></label>
-          <textarea class="ta-lg" id="hasil" placeholder="Tuliskan hasil konkret dari aktivitas yang dilakukan. Contoh:
-• Respon baik dari wakil direktur Yayasan Abdul Mukti, diminta mengajukan proposal.
-• Menunggu hasil musyawarah paguyuban warga terkait ijin pemasangan tiang."></textarea>
-          <div class="field-err" id="err-hasil">Hasil & Pencapaian wajib diisi.</div>
+          <textarea class="ta-lg" id="hasil" placeholder="Tuliskan hasil konkret dari aktivitas yang dilakukan.&#10;Contoh:&#10;• Respon baik dari wakil direktur Yayasan Abdul Mukti, diminta mengajukan proposal.&#10;• Menunggu hasil musyawarah paguyuban warga."></textarea>
+          <div class="field-err" id="err-hasil">Hasil &amp; Pencapaian wajib diisi.</div>
         </div>
-
         <div class="btn-row">
           <button class="btn-back" onclick="goBack()">← Kembali</button>
           <button class="btn-next" onclick="goNext()">Lanjut →</button>
@@ -276,34 +328,32 @@ tr:hover td { background: #FAFAF8; }
       </div>
     </div>
 
-    <!-- STEP 3: Solusi & Tindak Lanjut -->
+    <!-- STEP 3 -->
     <div class="step" id="step-2">
       <div class="card">
         <div class="section-eyebrow">
           <div class="eyebrow-icon">3️⃣</div>
           <div><div class="eyebrow-num">Langkah 03</div><div class="eyebrow-title">Solusi / Tindak Lanjut</div></div>
         </div>
-
         <div class="field">
           <label class="field-label" for="tindak-lanjut">Solusi / Tindak Lanjut <span class="req">*</span><span class="field-hint">— rencana ke depan?</span></label>
-          <textarea class="ta-lg" id="tindak-lanjut" placeholder="Tuliskan rencana tindak lanjut atau solusi atas kegiatan dan hasil di atas. Contoh:
-• Menyiapkan proposal penawaran paket Umroh UBR dan ketemu dengan Pembina Yayasan Ust. Arifin.
-• Follow up kepada PIC Bpk. Mukhlisin mengenai hasil musyawarah warga."></textarea>
+          <textarea class="ta-lg" id="tindak-lanjut" placeholder="Tuliskan rencana tindak lanjut atau solusi.&#10;Contoh:&#10;• Menyiapkan proposal penawaran paket Umroh UBR.&#10;• Follow up kepada PIC Bpk. Mukhlisin mengenai hasil musyawarah."></textarea>
           <div class="field-err" id="err-tindak">Tindak lanjut wajib diisi.</div>
         </div>
-
         <hr class="divider">
-
         <div class="field">
           <label class="field-label" for="kendala">Kendala yang Dihadapi <span class="field-hint">(opsional)</span></label>
           <textarea class="ta-sm" id="kendala" placeholder="Tuliskan kendala yang dihadapi hari ini, jika ada..."></textarea>
         </div>
-
         <div class="field">
           <label class="field-label" for="catatan">Catatan Tambahan untuk Manajemen <span class="field-hint">(opsional)</span></label>
-          <textarea class="ta-sm" id="catatan" placeholder="Informasi penting, saran, atau hal lain yang perlu diketahui manajemen..."></textarea>
+          <textarea class="ta-sm" id="catatan" placeholder="Informasi penting atau hal lain yang perlu diketahui manajemen..."></textarea>
         </div>
-
+        <hr class="divider">
+        <div class="field">
+          <label class="field-label" for="agenda-besok">📅 Agenda Besok <span class="field-hint">(akan muncul sebagai pengingat besok)</span></label>
+          <textarea class="ta-sm" id="agenda-besok" placeholder="Tuliskan rencana agenda untuk besok.&#10;Contoh:&#10;• Meeting dengan tim marketing pukul 09.00&#10;• Follow up proposal ke Yayasan Abdul Mukti&#10;• Survei lokasi pemasangan tiang di Griya Asri"></textarea>
+        </div>
         <div class="btn-row">
           <button class="btn-back" onclick="goBack()">← Kembali</button>
           <button class="btn-submit" onclick="submitForm()">✦ Kirim Laporan</button>
@@ -318,21 +368,11 @@ tr:hover td { background: #FAFAF8; }
       <p class="success-sub">Terima kasih. Laporan harian Anda telah tercatat dan dapat diakses oleh manajemen UBR.</p>
       <div class="summary-box">
         <div class="summary-title">✦ Ringkasan Laporan</div>
-        <div class="summary-item">
-          <div class="summary-key" id="sum-header">—</div>
-        </div>
-        <div class="summary-item">
-          <div class="summary-key">1 · Aktivitas Hari Ini</div>
-          <div class="summary-text" id="sum-aktivitas">—</div>
-        </div>
-        <div class="summary-item">
-          <div class="summary-key">2 · Hasil &amp; Pencapaian</div>
-          <div class="summary-text" id="sum-hasil">—</div>
-        </div>
-        <div class="summary-item">
-          <div class="summary-key">3 · Solusi / Tindak Lanjut</div>
-          <div class="summary-text" id="sum-tindak">—</div>
-        </div>
+        <div class="summary-item"><div class="summary-key" id="sum-header">—</div></div>
+        <div class="summary-item"><div class="summary-key">1 · Aktivitas Hari Ini</div><div class="summary-text" id="sum-aktivitas">—</div></div>
+        <div class="summary-item"><div class="summary-key">2 · Hasil &amp; Pencapaian</div><div class="summary-text" id="sum-hasil">—</div></div>
+        <div class="summary-item"><div class="summary-key">3 · Solusi / Tindak Lanjut</div><div class="summary-text" id="sum-tindak">—</div></div>
+        <div class="summary-item"><div class="summary-key">📅 Agenda Besok</div><div class="summary-text" id="sum-agenda">—</div></div>
       </div>
       <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
     </div>
@@ -358,159 +398,201 @@ tr:hover td { background: #FAFAF8; }
   <div class="admin-hero">
     <div class="admin-hero-inner">
       <div>
-        <div class="admin-title">📊 Rekap Laporan Harian Petugas UBR</div>
+        <div class="admin-title">📊 Dashboard Admin UBR</div>
         <div class="admin-sub" id="admin-sub">Memuat data...</div>
       </div>
       <div class="admin-actions">
         <button class="btn-export btn-csv" onclick="exportCSV()">⬇ Export CSV</button>
-        <button class="btn-export" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.25);" onclick="renderDashboard()">🔄 Refresh</button>
+        <button class="btn-export btn-ghost" onclick="renderDashboard()">🔄 Refresh</button>
+      </div>
+    </div>
+    <!-- TABS -->
+    <div style="max-width:1000px;margin:0 auto;">
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchTab('laporan')">📋 Laporan</button>
+        <button class="admin-tab" onclick="switchTab('petugas')">👥 Kelola Petugas</button>
       </div>
     </div>
   </div>
 
   <div class="admin-body">
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-label">Total Laporan</div><div class="stat-val" id="st-total">—</div><div class="stat-sub">semua petugas</div></div>
-      <div class="stat-card stat-green"><div class="stat-label">Petugas Aktif</div><div class="stat-val" id="st-petugas">—</div><div class="stat-sub">melapor hari ini</div></div>
-      <div class="stat-card"><div class="stat-label">Ada Kendala</div><div class="stat-val" id="st-kendala">—</div><div class="stat-sub">perlu perhatian</div></div>
+
+    <!-- PANEL: LAPORAN -->
+    <div class="admin-panel active" id="panel-laporan">
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">Total Laporan</div><div class="stat-val" id="st-total">—</div><div class="stat-sub">semua petugas</div></div>
+        <div class="stat-card stat-green"><div class="stat-label">Petugas Aktif</div><div class="stat-val" id="st-petugas">—</div><div class="stat-sub">melapor hari ini</div></div>
+        <div class="stat-card"><div class="stat-label">Ada Kendala</div><div class="stat-val" id="st-kendala">—</div><div class="stat-sub">perlu perhatian</div></div>
+        <div class="stat-card"><div class="stat-label">Total Petugas</div><div class="stat-val" id="st-jml-petugas">—</div><div class="stat-sub">terdaftar</div></div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">📋 Laporan Terbaru</div>
+          <div class="table-count" id="tbl-count">—</div>
+        </div>
+        <div style="padding:1rem" id="laporan-list">
+          <div class="empty-state"><div class="empty-icon">📭</div>Belum ada data laporan</div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">📊 Tabel Data Lengkap</div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th><th>Nama</th><th>Jabatan</th><th>Tanggal</th>
+                <th>Aktivitas</th><th>Hasil</th><th>Tindak Lanjut</th>
+                <th>Kendala</th><th>Catatan</th><th>Waktu Input</th>
+              </tr>
+            </thead>
+            <tbody id="tbl-body">
+              <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📭</div>Belum ada data</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <!-- LAPORAN CARDS -->
-    <div class="table-card">
-      <div class="table-header">
-        <div class="table-title">📋 Laporan Terbaru</div>
-        <div class="table-count" id="tbl-count">—</div>
+    <!-- PANEL: KELOLA PETUGAS -->
+    <div class="admin-panel" id="panel-petugas">
+      <div class="table-card">
+        <div class="petugas-toolbar">
+          <div>
+            <div class="table-title">👥 Daftar Petugas</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px;">Data tersimpan di browser ini</div>
+          </div>
+          <button class="btn-add-petugas" onclick="openModal()">+ Tambah Petugas</button>
+        </div>
+        <div class="petugas-list" id="petugas-list">
+          <div class="petugas-empty">Belum ada petugas. Klik "+ Tambah Petugas" untuk memulai.</div>
+        </div>
       </div>
-      <div style="padding:1rem" id="laporan-list">
-        <div class="empty-state"><div class="empty-icon">📭</div>Belum ada data laporan</div>
+
+      <div class="table-card" style="padding:1.25rem;">
+        <div style="font-size:13px;font-weight:500;margin-bottom:8px;">⚠️ Catatan Penting</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7;">
+          Data petugas disimpan di <strong>localStorage browser ini</strong>. Artinya:<br>
+          • Jika dibuka di browser/perangkat lain, data perlu diinput ulang.<br>
+          • Untuk berbagi data petugas ke semua pengguna, gunakan fitur <strong>Export/Import</strong> di bawah.
+        </div>
+        <div style="display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;">
+          <button class="btn-export btn-csv" onclick="exportPetugas()" style="font-size:12px;padding:7px 14px;">⬇ Export Petugas (JSON)</button>
+          <label style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;background:var(--green-light);border:1px solid var(--green-mid);color:var(--green);font-size:12px;font-weight:500;cursor:pointer;">
+            ⬆ Import Petugas (JSON)
+            <input type="file" accept=".json" style="display:none" onchange="importPetugas(event)">
+          </label>
+        </div>
       </div>
     </div>
 
-    <!-- TABLE -->
-    <div class="table-card">
-      <div class="table-header">
-        <div class="table-title">📊 Tabel Data Lengkap</div>
-      </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nama</th>
-              <th>Jabatan</th>
-              <th>Hari / Tanggal</th>
-              <th>Aktivitas</th>
-              <th>Hasil</th>
-              <th>Tindak Lanjut</th>
-              <th>Kendala</th>
-              <th>Catatan</th>
-              <th>Waktu Input</th>
-            </tr>
-          </thead>
-          <tbody id="tbl-body">
-            <tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📭</div>Belum ada data</div></td></tr>
-          </tbody>
-        </table>
-      </div>
+  </div>
+</div>
+
+<!-- MODAL TAMBAH/EDIT PETUGAS -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Tambah Petugas</div>
+    <div class="modal-field">
+      <label class="modal-label" for="m-nama">Nama Lengkap <span class="req">*</span></label>
+      <input type="text" class="modal-input" id="m-nama" placeholder="Contoh: Rohman">
+      <div class="modal-err" id="m-err-nama">Nama wajib diisi.</div>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label" for="m-jabatan">Jabatan / Posisi <span class="req">*</span></label>
+      <input type="text" class="modal-input" id="m-jabatan" placeholder="Contoh: Marketing WMS & UBR">
+      <div class="modal-err" id="m-err-jabatan">Jabatan wajib diisi.</div>
+    </div>
+    <input type="hidden" id="m-edit-id">
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal()">Batal</button>
+      <button class="btn-modal-save" onclick="savePetugas()">Simpan</button>
     </div>
   </div>
 </div>
 
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script>
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // KONFIGURASI
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQQXg2BPFupbtFjHVXRtCi-sjgIco5uFEJAbfsT425LEnUs985kAiR0U6BuQKJ-iSy/exec';
-// Cara setup Google Apps Script:
-// 1. Buka Google Sheets → Extensions → Apps Script
-// 2. Paste kode di bawah (lihat komentar APPS SCRIPT CODE)
-// 3. Deploy → New deployment → Web app → Execute as Me → Anyone → Deploy
-// 4. Copy URL dan paste menggantikan teks di atas
+const ADMIN_PW = 'ubr2024'; // ✏️ Ganti kata sandi admin
+const LS_KEY = 'ubr_petugas_v1';
 
-/*
-======= APPS SCRIPT CODE =======
-Paste ini ke Google Apps Script:
+// ══════════════════════════════════════════════
+// PETUGAS — localStorage
+// ══════════════════════════════════════════════
+const DEFAULT_PETUGAS = [
+  { id: '1', nama: 'Rohman', jabatan: 'Marketing WMS & UBR' },
+];
 
-function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const d = JSON.parse(e.postData.contents);
-  sheet.appendRow([
-    d.waktuInput, d.nama, d.jabatan, d.hariTanggal, d.tglRaw,
-    d.aktivitas, d.hasil, d.tindakLanjut, d.kendala, d.catatan
-  ]);
-  return ContentService
-    .createTextOutput(JSON.stringify({status:'ok'}))
-    .setMimeType(ContentService.MimeType.JSON);
+function getPetugas() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    return raw ? JSON.parse(raw) : DEFAULT_PETUGAS;
+  } catch { return DEFAULT_PETUGAS; }
 }
 
-function doGet() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const rows = sheet.getDataRange().getValues();
-  if (rows.length < 2) return ContentService.createTextOutput('[]').setMimeType(ContentService.MimeType.JSON);
-  const keys = ['waktuInput','nama','jabatan','hariTanggal','tglRaw','aktivitas','hasil','tindakLanjut','kendala','catatan'];
-  const data = rows.slice(1).map(r => {
-    const obj = {};
-    keys.forEach((k,i) => obj[k] = r[i] || '');
-    return obj;
+function savePetugasList(list) {
+  localStorage.setItem(LS_KEY, JSON.stringify(list));
+}
+
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+// ══════════════════════════════════════════════
+// POPULATE FORM SELECT
+// ══════════════════════════════════════════════
+function populateNamaSelect() {
+  const sel = document.getElementById('nama');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Pilih nama Anda —</option>';
+  getPetugas().forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.nama + '|' + p.jabatan;
+    opt.textContent = p.nama;
+    sel.appendChild(opt);
   });
-  return ContentService
-    .createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON);
+  if (cur) sel.value = cur;
 }
-*/
 
-const ADMIN_PW = 'ubr2024'; // ✏️ Ganti kata sandi admin di sini
-
-// ══════════════════════════════════════════════════════
-// DATA NAMA → JABATAN
-// ✏️ Sesuaikan dengan tim Anda
-// ══════════════════════════════════════════════════════
-const NAMA_JABATAN = {
-  'Rohman': 'Marketing WMS & UBR',
-  'Ahmad': 'Pembimbing Ibadah',
-  'Siti Fatimah': 'Koordinator Lapangan',
-  'Budi Santoso': 'Petugas Logistik',
-  'Hasan': 'Ketua Rombongan',
-};
-
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // TANGGAL OTOMATIS
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 const HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-
 function getTodayStr() {
-  const now = new Date();
-  return HARI[now.getDay()] + ', ' + now.getDate() + ' ' + BULAN[now.getMonth()] + ' ' + now.getFullYear();
+  const n = new Date();
+  return HARI[n.getDay()] + ', ' + n.getDate() + ' ' + BULAN[n.getMonth()] + ' ' + n.getFullYear();
 }
-function getTodayRaw() {
-  const now = new Date();
-  return now.toISOString().slice(0, 10);
-}
+function getTodayRaw() { return new Date().toISOString().slice(0,10); }
 
 document.getElementById('info-tgl').textContent = getTodayStr();
 
 function onNamaChange() {
-  const sel = document.getElementById('nama');
-  const val = sel.value;
-  if (!val) {
-    document.getElementById('info-jabatan').textContent = '— pilih nama dulu —';
-    return;
-  }
-  const [nama] = val.split('|');
-  const jabatan = NAMA_JABATAN[nama] || val.split('|')[1] || '—';
-  document.getElementById('info-jabatan').textContent = jabatan;
+  const val = document.getElementById('nama').value;
+  const nama = val ? val.split('|')[0] : '';
+  document.getElementById('info-jabatan').textContent = val ? val.split('|')[1] : '— pilih nama dulu —';
+  checkAndShowReminder(nama);
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // NAVIGASI HALAMAN
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   if (name === 'form') {
     document.getElementById('page-form').classList.add('active');
     document.getElementById('nav-form').classList.add('active');
+    populateNamaSelect();
   } else if (name === 'admin-gate') {
     document.getElementById('page-admin-gate').classList.add('active');
     document.getElementById('nav-admin').classList.add('active');
@@ -518,19 +600,180 @@ function showPage(name) {
     document.getElementById('page-admin').classList.add('active');
     document.getElementById('nav-admin').classList.add('active');
     renderDashboard();
+    renderPetugasList();
   }
 }
 
 function checkGate() {
   const pw = document.getElementById('gate-pw').value;
-  const err = document.getElementById('gate-err');
-  if (pw === ADMIN_PW) { err.style.display = 'none'; showPage('admin'); }
-  else { err.style.display = 'block'; }
+  if (pw === ADMIN_PW) { document.getElementById('gate-err').style.display='none'; showPage('admin'); }
+  else document.getElementById('gate-err').style.display='block';
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// ADMIN TABS
+// ══════════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.admin-tab').forEach((t,i) => t.classList.remove('active'));
+  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+  if (tab === 'laporan') {
+    document.querySelector('.admin-tab:nth-child(1)').classList.add('active');
+    document.getElementById('panel-laporan').classList.add('active');
+  } else {
+    document.querySelector('.admin-tab:nth-child(2)').classList.add('active');
+    document.getElementById('panel-petugas').classList.add('active');
+    renderPetugasList();
+  }
+}
+
+// ══════════════════════════════════════════════
+// RENDER DAFTAR PETUGAS
+// ══════════════════════════════════════════════
+function renderPetugasList() {
+  const list = getPetugas();
+  document.getElementById('st-jml-petugas').textContent = list.length || '—';
+  const div = document.getElementById('petugas-list');
+  if (!list.length) {
+    div.innerHTML = '<div class="petugas-empty">Belum ada petugas. Klik "+ Tambah Petugas" untuk memulai.</div>';
+    return;
+  }
+  div.innerHTML = list.map(p => `
+    <div class="petugas-row" id="prow-${p.id}">
+      <div class="petugas-avatar">${p.nama.charAt(0).toUpperCase()}</div>
+      <div class="petugas-info">
+        <div class="petugas-nama-text">${escHtml(p.nama)}</div>
+        <div class="petugas-jabatan-text">${escHtml(p.jabatan)}</div>
+      </div>
+      <div class="petugas-actions">
+        <button class="btn-edit-p" onclick="openModal('${p.id}')">✏️ Edit</button>
+        <button class="btn-del-p" onclick="deletePetugas('${p.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ══════════════════════════════════════════════
+// MODAL TAMBAH/EDIT
+// ══════════════════════════════════════════════
+function openModal(id) {
+  document.getElementById('m-nama').value = '';
+  document.getElementById('m-jabatan').value = '';
+  document.getElementById('m-edit-id').value = '';
+  document.getElementById('m-err-nama').style.display = 'none';
+  document.getElementById('m-err-jabatan').style.display = 'none';
+  document.getElementById('m-nama').classList.remove('err');
+  document.getElementById('m-jabatan').classList.remove('err');
+
+  if (id) {
+    const p = getPetugas().find(x => x.id === id);
+    if (p) {
+      document.getElementById('modal-title').textContent = 'Edit Petugas';
+      document.getElementById('m-nama').value = p.nama;
+      document.getElementById('m-jabatan').value = p.jabatan;
+      document.getElementById('m-edit-id').value = p.id;
+    }
+  } else {
+    document.getElementById('modal-title').textContent = 'Tambah Petugas';
+  }
+  document.getElementById('modal-overlay').classList.add('show');
+  setTimeout(() => document.getElementById('m-nama').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('show');
+}
+
+function savePetugas() {
+  const nama = document.getElementById('m-nama').value.trim();
+  const jabatan = document.getElementById('m-jabatan').value.trim();
+  let ok = true;
+  if (!nama) { document.getElementById('m-err-nama').style.display='block'; document.getElementById('m-nama').classList.add('err'); ok=false; }
+  else { document.getElementById('m-err-nama').style.display='none'; document.getElementById('m-nama').classList.remove('err'); }
+  if (!jabatan) { document.getElementById('m-err-jabatan').style.display='block'; document.getElementById('m-jabatan').classList.add('err'); ok=false; }
+  else { document.getElementById('m-err-jabatan').style.display='none'; document.getElementById('m-jabatan').classList.remove('err'); }
+  if (!ok) return;
+
+  const editId = document.getElementById('m-edit-id').value;
+  let list = getPetugas();
+
+  if (editId) {
+    list = list.map(p => p.id === editId ? { ...p, nama, jabatan } : p);
+    showToast('✅ Data petugas berhasil diperbarui');
+  } else {
+    // Cek duplikat nama
+    if (list.find(p => p.nama.toLowerCase() === nama.toLowerCase())) {
+      document.getElementById('m-err-nama').textContent = 'Nama sudah ada dalam daftar.';
+      document.getElementById('m-err-nama').style.display='block';
+      document.getElementById('m-nama').classList.add('err');
+      return;
+    }
+    list.push({ id: genId(), nama, jabatan });
+    showToast('✅ Petugas baru berhasil ditambahkan');
+  }
+
+  savePetugasList(list);
+  closeModal();
+  renderPetugasList();
+  document.getElementById('st-jml-petugas').textContent = list.length;
+}
+
+function deletePetugas(id) {
+  const p = getPetugas().find(x => x.id === id);
+  if (!p) return;
+  if (!confirm('Hapus petugas "' + p.nama + '"?\nTindakan ini tidak dapat dibatalkan.')) return;
+  const list = getPetugas().filter(x => x.id !== id);
+  savePetugasList(list);
+  renderPetugasList();
+  showToast('🗑 Petugas berhasil dihapus');
+}
+
+// ══════════════════════════════════════════════
+// EXPORT / IMPORT PETUGAS
+// ══════════════════════════════════════════════
+function exportPetugas() {
+  const data = getPetugas();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'petugas_ubr_' + getTodayRaw() + '.json';
+  a.click();
+  showToast('⬇ File petugas berhasil diunduh');
+}
+
+function importPetugas(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!Array.isArray(data)) throw new Error('Format salah');
+      if (!confirm('Import akan MENGGANTI seluruh data petugas saat ini (' + getPetugas().length + ' orang) dengan ' + data.length + ' data dari file.\n\nLanjutkan?')) return;
+      savePetugasList(data);
+      renderPetugasList();
+      showToast('✅ Import berhasil: ' + data.length + ' petugas');
+    } catch { alert('File tidak valid. Pastikan menggunakan file JSON yang diekspor dari aplikasi ini.'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+// ══════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ══════════════════════════════════════════════
 // STEP NAVIGATION
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 let currentStep = 0;
 const totalSteps = 3;
 
@@ -548,29 +791,23 @@ function updateProgress() {
 }
 
 function clearErrors() {
-  document.querySelectorAll('.field-err').forEach(e => e.style.display = 'none');
+  document.querySelectorAll('.field-err').forEach(e => e.style.display='none');
   document.querySelectorAll('.error').forEach(e => e.classList.remove('error'));
 }
 
 function showErr(errId, fieldId) {
-  const e = document.getElementById(errId);
-  if (e) e.style.display = 'block';
-  if (fieldId) {
-    const f = document.getElementById(fieldId);
-    if (f) f.classList.add('error');
-  }
+  const e = document.getElementById(errId); if (e) e.style.display='block';
+  const f = document.getElementById(fieldId); if (f) f.classList.add('error');
 }
 
 function validateStep(step) {
-  clearErrors();
-  let ok = true;
-  if (step === 0) {
-    if (!document.getElementById('nama').value) { showErr('err-nama', 'nama'); ok = false; }
-  } else if (step === 1) {
-    if (!document.getElementById('aktivitas').value.trim()) { showErr('err-aktivitas', 'aktivitas'); ok = false; }
-    if (!document.getElementById('hasil').value.trim()) { showErr('err-hasil', 'hasil'); ok = false; }
+  clearErrors(); let ok = true;
+  if (step === 0) { if (!document.getElementById('nama').value) { showErr('err-nama','nama'); ok=false; } }
+  else if (step === 1) {
+    if (!document.getElementById('aktivitas').value.trim()) { showErr('err-aktivitas','aktivitas'); ok=false; }
+    if (!document.getElementById('hasil').value.trim()) { showErr('err-hasil','hasil'); ok=false; }
   } else if (step === 2) {
-    if (!document.getElementById('tindak-lanjut').value.trim()) { showErr('err-tindak', 'tindak-lanjut'); ok = false; }
+    if (!document.getElementById('tindak-lanjut').value.trim()) { showErr('err-tindak','tindak-lanjut'); ok=false; }
   }
   return ok;
 }
@@ -593,20 +830,76 @@ function goBack() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// AGENDA BESOK — localStorage per nama
+// ══════════════════════════════════════════════
+const LS_AGENDA = 'ubr_agenda_v1';
+
+function saveAgenda(nama, agenda, tglBesok) {
+  try {
+    const all = JSON.parse(localStorage.getItem(LS_AGENDA) || '{}');
+    all[nama] = { agenda, tglBesok, dismissed: false };
+    localStorage.setItem(LS_AGENDA, JSON.stringify(all));
+  } catch(e) {}
+}
+
+function getAgenda(nama) {
+  try {
+    const all = JSON.parse(localStorage.getItem(LS_AGENDA) || '{}');
+    return all[nama] || null;
+  } catch { return null; }
+}
+
+function dismissReminder() {
+  document.getElementById('reminder-box').classList.remove('show');
+  // Tandai sudah dibaca
+  const nama = document.getElementById('nama').value.split('|')[0];
+  if (!nama) return;
+  try {
+    const all = JSON.parse(localStorage.getItem(LS_AGENDA) || '{}');
+    if (all[nama]) { all[nama].dismissed = true; localStorage.setItem(LS_AGENDA, JSON.stringify(all)); }
+  } catch(e) {}
+}
+
+function checkAndShowReminder(nama) {
+  const box = document.getElementById('reminder-box');
+  box.classList.remove('show');
+  if (!nama) return;
+
+  const data = getAgenda(nama);
+  if (!data || !data.agenda || data.dismissed) return;
+
+  const today = getTodayRaw();
+  // Tampilkan jika agenda ini memang untuk hari ini
+  if (data.tglBesok !== today) return;
+
+  document.getElementById('reminder-text').textContent = data.agenda;
+  // Format tanggal lebih ramah
+  const d = new Date(today + 'T00:00:00');
+  document.getElementById('reminder-date').textContent = HARI[d.getDay()] + ', ' + d.getDate() + ' ' + BULAN[d.getMonth()];
+  box.classList.add('show');
+}
+
+// ══════════════════════════════════════════════
 // SUBMIT
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 async function submitForm() {
   if (!validateStep(2)) return;
-
   const namaVal = document.getElementById('nama').value;
-  const [nama] = namaVal.split('|');
-  const jabatan = NAMA_JABATAN[nama] || namaVal.split('|')[1] || '—';
+  const [nama, jabatan] = namaVal.split('|');
+  const agendaBesok = document.getElementById('agenda-besok').value.trim();
+
+  // Hitung tanggal besok
+  const besok = new Date();
+  besok.setDate(besok.getDate() + 1);
+  const tglBesok = besok.toISOString().slice(0, 10);
+
+  // Simpan agenda besok ke localStorage
+  if (agendaBesok) saveAgenda(nama, agendaBesok, tglBesok);
 
   const payload = {
     waktuInput: new Date().toLocaleString('id-ID'),
-    nama,
-    jabatan,
+    nama, jabatan,
     hariTanggal: getTodayStr(),
     tglRaw: getTodayRaw(),
     aktivitas: document.getElementById('aktivitas').value.trim(),
@@ -614,101 +907,76 @@ async function submitForm() {
     tindakLanjut: document.getElementById('tindak-lanjut').value.trim(),
     kendala: document.getElementById('kendala').value.trim(),
     catatan: document.getElementById('catatan').value.trim(),
+    agendaBesok,
   };
-
-  // Tampilkan success
   document.getElementById('step-2').classList.remove('active');
   document.getElementById('progress-wrap').style.display = 'none';
-  document.getElementById('success-screen').classList.add('show');
-
+  const sc = document.getElementById('success-screen');
+  sc.classList.add('show');
   document.getElementById('sum-header').textContent = nama + ' · ' + jabatan + ' · ' + getTodayStr();
   document.getElementById('sum-aktivitas').textContent = payload.aktivitas;
   document.getElementById('sum-hasil').textContent = payload.hasil;
   document.getElementById('sum-tindak').textContent = payload.tindakLanjut;
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Tampilkan agenda besok di success jika ada
+  const agSum = document.getElementById('sum-agenda');
+  if (agSum) agSum.textContent = agendaBesok || '(tidak ada agenda)';
 
-  if (SCRIPT_URL !== 'GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_ANDA') {
-    try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (e) { console.error('Gagal kirim ke Sheets:', e); }
-  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  try {
+    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+  } catch(e) { console.error('Gagal kirim ke Sheets:', e); }
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // DASHBOARD
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 async function loadData() {
-  if (SCRIPT_URL === 'GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_ANDA') return [];
-  try {
-    const res = await fetch(SCRIPT_URL);
-    return await res.json();
-  } catch { return []; }
+  try { const res = await fetch(SCRIPT_URL); return await res.json(); } catch { return []; }
 }
 
 async function renderDashboard() {
   const data = await loadData();
   const n = data.length;
-
   document.getElementById('admin-sub').textContent = n + ' laporan · Diperbarui: ' + new Date().toLocaleString('id-ID');
   document.getElementById('st-total').textContent = n || '—';
   document.getElementById('tbl-count').textContent = n + ' laporan';
-
   const today = getTodayRaw();
   const ptgsHariIni = new Set(data.filter(d => d.tglRaw === today).map(d => d.nama)).size;
   const adaKendala = data.filter(d => d.kendala && d.kendala.trim()).length;
-
   document.getElementById('st-petugas').textContent = ptgsHariIni || '—';
   document.getElementById('st-kendala').textContent = adaKendala || '—';
+  document.getElementById('st-jml-petugas').textContent = getPetugas().length || '—';
 
-  // Laporan cards
   const lDiv = document.getElementById('laporan-list');
   if (!n) { lDiv.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div>Belum ada laporan</div>'; }
   else {
-    lDiv.innerHTML = [...data].reverse().slice(0, 20).map(d => `
+    lDiv.innerHTML = [...data].reverse().slice(0,20).map(d => `
       <div class="laporan-card">
         <div class="laporan-card-header">
-          <div>
-            <div class="laporan-nama">${d.nama || '—'}</div>
-            <div class="laporan-meta">${d.jabatan || ''}</div>
-          </div>
-          <div class="laporan-meta">${d.hariTanggal || d.tglRaw || '—'}</div>
+          <div><div class="laporan-nama">${d.nama||'—'}</div><div class="laporan-meta">${d.jabatan||''}</div></div>
+          <div class="laporan-meta">${d.hariTanggal||d.tglRaw||'—'}</div>
         </div>
-        <div class="laporan-section">
-          <div class="laporan-section-title">1 · Aktivitas Hari Ini</div>
-          <div class="laporan-section-text">${(d.aktivitas||'—').replace(/\n/g,'<br>')}</div>
-        </div>
-        <div class="laporan-section">
-          <div class="laporan-section-title">2 · Hasil &amp; Pencapaian</div>
-          <div class="laporan-section-text">${(d.hasil||'—').replace(/\n/g,'<br>')}</div>
-        </div>
-        <div class="laporan-section">
-          <div class="laporan-section-title">3 · Solusi / Tindak Lanjut</div>
-          <div class="laporan-section-text">${(d.tindakLanjut||'—').replace(/\n/g,'<br>')}</div>
-        </div>
-        ${d.kendala ? `<div class="laporan-section"><div class="laporan-section-title" style="color:#C0392B">⚡ Kendala</div><div class="laporan-section-text">${d.kendala.replace(/\n/g,'<br>')}</div></div>` : ''}
+        <div class="laporan-section"><div class="laporan-section-title">1 · Aktivitas Hari Ini</div><div class="laporan-section-text">${(d.aktivitas||'—').replace(/\n/g,'<br>')}</div></div>
+        <div class="laporan-section"><div class="laporan-section-title">2 · Hasil &amp; Pencapaian</div><div class="laporan-section-text">${(d.hasil||'—').replace(/\n/g,'<br>')}</div></div>
+        <div class="laporan-section"><div class="laporan-section-title">3 · Solusi / Tindak Lanjut</div><div class="laporan-section-text">${(d.tindakLanjut||'—').replace(/\n/g,'<br>')}</div></div>
+        ${d.kendala?`<div class="laporan-section"><div class="laporan-section-title" style="color:#C0392B">⚡ Kendala</div><div class="laporan-section-text">${d.kendala.replace(/\n/g,'<br>')}</div></div>`:''}
       </div>`).join('');
   }
 
-  // Table
   const tbody = document.getElementById('tbl-body');
   if (!n) { tbody.innerHTML = '<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📭</div>Belum ada data</div></td></tr>'; return; }
-  tbody.innerHTML = [...data].reverse().map((d, i) => `<tr>
-    <td style="color:var(--muted)">${n - i}</td>
-    <td style="font-weight:500;white-space:nowrap">${d.nama || '—'}</td>
-    <td style="white-space:nowrap">${d.jabatan || '—'}</td>
-    <td style="white-space:nowrap">${d.hariTanggal || d.tglRaw || '—'}</td>
+  tbody.innerHTML = [...data].reverse().map((d,i) => `<tr>
+    <td style="color:var(--muted)">${n-i}</td>
+    <td style="font-weight:500;white-space:nowrap">${d.nama||'—'}</td>
+    <td style="white-space:nowrap">${d.jabatan||'—'}</td>
+    <td style="white-space:nowrap">${d.hariTanggal||d.tglRaw||'—'}</td>
     <td class="td-wrap">${(d.aktivitas||'—').replace(/\n/g,'<br>')}</td>
     <td class="td-wrap">${(d.hasil||'—').replace(/\n/g,'<br>')}</td>
     <td class="td-wrap">${(d.tindakLanjut||'—').replace(/\n/g,'<br>')}</td>
-    <td class="td-wrap">${d.kendala || '—'}</td>
-    <td class="td-wrap">${d.catatan || '—'}</td>
-    <td style="color:var(--muted);font-size:11px;white-space:nowrap">${d.waktuInput || '—'}</td>
+    <td class="td-wrap">${d.kendala||'—'}</td>
+    <td class="td-wrap">${d.catatan||'—'}</td>
+    <td style="color:var(--muted);font-size:11px;white-space:nowrap">${d.waktuInput||'—'}</td>
   </tr>`).join('');
 }
 
@@ -716,18 +984,22 @@ async function exportCSV() {
   const data = await loadData();
   if (!data.length) { alert('Belum ada data untuk diekspor.'); return; }
   const h = ['No','Waktu Input','Nama','Jabatan','Hari & Tanggal','Aktivitas Hari Ini','Hasil & Pencapaian','Solusi / Tindak Lanjut','Kendala','Catatan'];
-  const rows = data.map((d, i) => [
-    i+1, d.waktuInput, d.nama, d.jabatan, d.hariTanggal,
-    d.aktivitas, d.hasil, d.tindakLanjut, d.kendala, d.catatan
-  ].map(v => '"' + String(v || '').replace(/"/g, '""') + '"'));
-  const csv = 'sep=;\n' + [h, ...rows].map(r => r.join(';')).join('\n');
+  const rows = data.map((d,i) => [i+1,d.waktuInput,d.nama,d.jabatan,d.hariTanggal,d.aktivitas,d.hasil,d.tindakLanjut,d.kendala,d.catatan].map(v => '"'+String(v||'').replace(/"/g,'""')+'"'));
+  const csv = 'sep=;\n' + [h,...rows].map(r=>r.join(';')).join('\n');
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' }));
-  a.download = 'laporan_harian_ubr_' + getTodayRaw() + '.csv';
+  a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));
+  a.download = 'laporan_harian_ubr_'+getTodayRaw()+'.csv';
   a.click();
 }
 
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+// Keyboard shortcut modal
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
 updateProgress();
+populateNamaSelect();
 </script>
 </body>
 </html>
