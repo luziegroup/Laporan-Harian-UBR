@@ -716,7 +716,7 @@ const ADMIN_PW = 'ubr2024'; // ✏️ Ganti kata sandi admin
     const raw = localStorage.getItem('ubr_petugas_v1');
     if (raw) {
       const list = JSON.parse(raw);
-      const namaLama = ['Ahmad','Hasan','Pembimbing'];
+ 
       const adaLama = list.some(p => namaLama.some(l => p.nama.includes(l)));
       if (adaLama || list.length < 2) localStorage.removeItem('ubr_petugas_v1');
     }
@@ -1285,25 +1285,35 @@ function fileToBase64(file) {
   });
 }
 
-// Kompres foto sebelum kirim agar tidak melebihi batas GAS (~4MB per request)
-function kompressFoto(file, maxWidthPx = 1200, qualityJpeg = 0.75) {
-  return new Promise((res) => {
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        let w = img.width, h = img.height;
-        if (w > maxWidthPx) { h = Math.round(h * maxWidthPx / w); w = maxWidthPx; }
-        canvas.width = w; canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, w, h);
-        const b64 = canvas.toDataURL('image/jpeg', qualityJpeg);
-        res({ base64: b64.split(',')[1], mimeType: 'image/jpeg' });
+// Kompres foto sebelum kirim agar tidak melebihi batas GAS
+function kompressFoto(file, maxWidthPx = 1024, qualityJpeg = 0.7) {
+  return new Promise((res, rej) => {
+    try {
+      const reader = new FileReader();
+      reader.onerror = () => rej(new Error('FileReader error'));
+      reader.onload = (ev) => {
+        try {
+          const img = new Image();
+          img.onerror = () => rej(new Error('Image load error'));
+          img.onload = () => {
+            try {
+              const canvas = document.createElement('canvas');
+              let w = img.width, h = img.height;
+              if (w > maxWidthPx) { h = Math.round(h * maxWidthPx / w); w = maxWidthPx; }
+              if (h > maxWidthPx) { w = Math.round(w * maxWidthPx / h); h = maxWidthPx; }
+              canvas.width = w; canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, w, h);
+              const b64 = canvas.toDataURL('image/jpeg', qualityJpeg);
+              console.log('Kompres OK: ' + w + 'x' + h + ' size=' + Math.round(b64.length/1024) + 'KB');
+              res({ base64: b64.split(',')[1], mimeType: 'image/jpeg' });
+            } catch(err) { rej(err); }
+          };
+          img.src = ev.target.result;
+        } catch(err) { rej(err); }
       };
-      img.src = ev.target.result;
-    };
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    } catch(err) { rej(err); }
   });
 }
 
@@ -1404,31 +1414,38 @@ async function submitForm() {
   // ── LANGKAH 2: Kirim foto satu per satu (dikompres dulu agar < 4MB) ──
   if (jumlahFoto > 0) {
     let fotoOk = 0;
+    console.log('=== MULAI UPLOAD FOTO ===');
+    console.log('nama:', nama, '| tglRaw:', tglRaw, '| waktuInput:', waktuInput);
     for (let i = 0; i < _fotoFiles.length; i++) {
       if (uploadInfo) uploadInfo.textContent = '📷 Mengunggah foto ' + (i + 1) + ' dari ' + jumlahFoto + '...';
       try {
+        console.log('Kompres foto ' + (i+1) + '...');
         const compressed = await kompressFoto(_fotoFiles[i]);
+        console.log('Kompres OK, base64 length=' + compressed.base64.length);
+        const payload = {
+          action: 'uploadFoto',
+          waktuInput,
+          nama,
+          tglRaw,
+          fotoIndex: i + 1,
+          base64: compressed.base64,
+          mimeType: compressed.mimeType,
+        };
+        console.log('Kirim foto ' + (i+1) + ' payload.nama=' + payload.nama + ' payload.tglRaw=' + payload.tglRaw);
         await fetch(SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'uploadFoto',
-            waktuInput,
-            nama,
-            tglRaw,
-            fotoIndex: i + 1,
-            base64: compressed.base64,
-            mimeType: compressed.mimeType,
-          })
+          body: JSON.stringify(payload)
         });
         fotoOk++;
-        // Jeda kecil antar upload agar GAS tidak throttle
-        await new Promise(r => setTimeout(r, 800));
+        console.log('Foto ' + (i+1) + ' terkirim OK');
+        await new Promise(r => setTimeout(r, 1000));
       } catch(e) {
         console.error('Gagal upload foto', i + 1, e);
       }
     }
+    console.log('=== SELESAI UPLOAD: ' + fotoOk + '/' + jumlahFoto + ' ===');
     if (uploadInfo) {
       uploadInfo.textContent = fotoOk === jumlahFoto
         ? '✅ Laporan & ' + jumlahFoto + ' foto berhasil dikirim!'
