@@ -250,6 +250,32 @@ tr:hover td { background: #FAFAF8; }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--dark); color: #fff; padding: 11px 22px; border-radius: 100px; font-size: 13px; font-weight: 500; z-index: 3000; transition: transform 0.3s ease; white-space: nowrap; pointer-events: none; }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
+/* ═══ UPLOAD FOTO ═══ */
+.foto-upload-area { border: 2px dashed var(--green-mid); border-radius: 12px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; background: var(--green-light); transition: all 0.2s; margin-bottom: 10px; }
+.foto-upload-area:hover { background: #C3DDD0; border-color: var(--green); }
+.foto-upload-icon { font-size: 28px; margin-bottom: 6px; }
+.foto-upload-text { font-size: 14px; font-weight: 500; color: var(--green); }
+.foto-upload-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.foto-preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
+.foto-thumb-wrap { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 2px solid var(--border); }
+.foto-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.foto-thumb-remove { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; background: rgba(0,0,0,0.6); color: #fff; border: none; border-radius: 50%; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.foto-count { font-size: 12px; color: var(--muted); margin-top: 6px; text-align: center; }
+/* ═══ FOTO DI KARTU ADMIN ═══ */
+.lap-foto-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.lap-foto-thumb { aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; position: relative; }
+.lap-foto-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s; }
+.lap-foto-thumb:hover img { transform: scale(1.05); }
+/* ═══ LIGHTBOX ═══ */
+.lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9000; display: none; align-items: center; justify-content: center; flex-direction: column; padding: 1rem; }
+.lightbox.show { display: flex; }
+.lightbox-img { max-width: 92vw; max-height: 78vh; border-radius: 10px; object-fit: contain; }
+.lightbox-nav { display: flex; align-items: center; gap: 20px; margin-top: 14px; }
+.lightbox-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.lightbox-btn:hover { background: rgba(255,255,255,0.3); }
+.lightbox-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.15); border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.lightbox-counter { color: rgba(255,255,255,0.7); font-size: 13px; min-width: 60px; text-align: center; }
+
 .footer { text-align: center; padding: 1.5rem; font-size: 12px; color: var(--border); }
 
 /* ═══════════════════ POPUP NOTIF & REMINDER ═══════════════════ */
@@ -373,7 +399,7 @@ tr:hover td { background: #FAFAF8; }
         <div class="info-strip">
           <div class="info-item"><span class="info-icon">📅</span><span class="info-label">Hari, Tanggal:</span><span class="info-val" id="info-tgl">—</span></div>
           <div class="info-item"><span class="info-icon">💼</span><span class="info-label">Jabatan:</span><span class="info-val" id="info-jabatan">— pilih nama dulu —</span></div>
-          <div class="info-item"><span class="info-icon">🕋</span><span class="info-label">Program:</span><span class="info-val">Marketing WMS &amp; UBR</span></div>
+          <div class="info-item"><span class="info-icon">🕋</span><span class="info-label">Program:</span><span class="info-val" id="info-program">—</span></div>
         </div>
         <div class="field">
           <label class="field-label">Nama Petugas <span class="req">*</span></label>
@@ -428,6 +454,19 @@ tr:hover td { background: #FAFAF8; }
           <div class="field-err" id="err-tindak">Tindak lanjut wajib diisi.</div>
         </div>
         <hr class="divider">
+        <!-- UPLOAD FOTO -->
+        <div class="field">
+          <label class="field-label">📷 Foto Hasil Kunjungan <span class="field-hint">(opsional, maks 5 foto)</span></label>
+          <div class="foto-upload-area" id="foto-upload-area" onclick="document.getElementById('foto-input').click()">
+            <div class="foto-upload-icon">📷</div>
+            <div class="foto-upload-text">Ketuk untuk pilih foto</div>
+            <div class="foto-upload-sub">JPG / PNG · Maks 5 foto · 5MB per foto</div>
+          </div>
+          <input type="file" id="foto-input" accept="image/*" multiple style="display:none" onchange="onFotoSelected(event)">
+          <div class="foto-preview-grid" id="foto-preview-grid"></div>
+          <div class="foto-count" id="foto-count" style="display:none"></div>
+        </div>
+        <hr class="divider">
         <div class="field">
           <label class="field-label" for="kendala">Kendala yang Dihadapi <span class="field-hint">(opsional)</span></label>
           <textarea class="ta-sm" id="kendala" placeholder="Tuliskan kendala yang dihadapi hari ini, jika ada..."></textarea>
@@ -455,6 +494,7 @@ tr:hover td { background: #FAFAF8; }
         <div class="summary-item"><div class="summary-key">2 · Hasil &amp; Pencapaian</div><div class="summary-text" id="sum-hasil">—</div></div>
         <div class="summary-item"><div class="summary-key">3 · Solusi / Tindak Lanjut</div><div class="summary-text" id="sum-tindak">—</div></div>
       </div>
+      <div id="sum-foto-info" style="display:none;font-size:13px;color:var(--green);text-align:center;margin:0.5rem 0 1rem;padding:10px;background:var(--green-light);border-radius:10px;"></div>
       <button class="btn-print" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
     </div>
   </div>
@@ -595,6 +635,17 @@ tr:hover td { background: #FAFAF8; }
   </div>
 </div>
 
+<!-- LIGHTBOX FOTO -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="Foto">
+  <div class="lightbox-nav">
+    <button class="lightbox-btn" onclick="lightboxNav(-1)">‹</button>
+    <span class="lightbox-counter" id="lightbox-counter">1 / 1</span>
+    <button class="lightbox-btn" onclick="lightboxNav(1)">›</button>
+  </div>
+</div>
+
 <!-- POPUP NOTIFIKASI -->
 <div class="alert-overlay" id="alert-notif-overlay">
   <div class="alert-box">
@@ -659,6 +710,19 @@ tr:hover td { background: #FAFAF8; }
 // ══════════════════════════════════════════════
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQQXg2BPFupbtFjHVXRtCi-sjgIco5uFEJAbfsT425LEnUs985kAiR0U6BuQKJ-iSy/exec';
 const ADMIN_PW = 'ubr2024'; // ✏️ Ganti kata sandi admin
+// Reset localStorage petugas jika masih data lama (hanya 1 orang / nama lama)
+(function() {
+  try {
+    const raw = localStorage.getItem('ubr_petugas_v1');
+    if (raw) {
+      const list = JSON.parse(raw);
+      const namaLama = ['Ahmad','Hasan','Pembimbing'];
+      const adaLama = list.some(p => namaLama.some(l => p.nama.includes(l)));
+      if (adaLama || list.length < 2) localStorage.removeItem('ubr_petugas_v1');
+    }
+  } catch(e) {}
+})();
+
 const LS_KEY = 'ubr_petugas_v1';
 
 // ══════════════════════════════════════════════
@@ -666,6 +730,9 @@ const LS_KEY = 'ubr_petugas_v1';
 // ══════════════════════════════════════════════
 const DEFAULT_PETUGAS = [
   { id: '1', nama: 'Rohman', jabatan: 'Marketing WMS & UBR' },
+  { id: '2', nama: 'Agus Kurnawan', jabatan: 'Operasional & Marketing UBR' },
+  { id: '3', nama: 'Akhmad Umar M', jabatan: 'Admin UBR' },
+  { id: '4', nama: 'Fathur Rohman', jabatan: 'Adv UBR' },
 ];
 
 function getPetugas() {
@@ -704,29 +771,66 @@ function populateNamaSelect() {
 // ══════════════════════════════════════════════
 const HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+function nowWIB() {
+  // Selalu gunakan timezone WIB (Asia/Jakarta, UTC+7)
+  return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
+}
+
+function toLocaleWIB(date) {
+  return new Date(date).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
+}
+
 function getTodayStr() {
-  const n = new Date();
+  const n = nowWIB();
   return HARI[n.getDay()] + ', ' + n.getDate() + ' ' + BULAN[n.getMonth()] + ' ' + n.getFullYear();
 }
-function getTodayRaw() { return new Date().toISOString().slice(0,10); }
+
+function getTodayRaw() {
+  const n = nowWIB();
+  const y = n.getFullYear();
+  const m = String(n.getMonth()+1).padStart(2,'0');
+  const d = String(n.getDate()).padStart(2,'0');
+  return y + '-' + m + '-' + d;
+}
 
 document.getElementById('info-tgl').textContent = getTodayStr();
 
 function onNamaChange() {
   const val = document.getElementById('nama').value;
-  if (!val) { document.getElementById('info-jabatan').textContent = '— pilih nama dulu —'; return; }
+  if (!val) {
+    document.getElementById('info-jabatan').textContent = '— pilih nama dulu —';
+    document.getElementById('info-program').textContent = '—';
+    return;
+  }
+  const jabatan = val.split('|')[1];
+  document.getElementById('info-jabatan').textContent = jabatan;
+  document.getElementById('info-program').textContent = jabatan;
   const nama = val.split('|')[0];
-  document.getElementById('info-jabatan').textContent = val.split('|')[1];
-  // Cek notifikasi & pengingat saat nama dipilih
   checkNotifAndReminder(nama);
 }
 
 let _allDataCache = null;
+let _cacheTime = 0;
+const CACHE_TTL = 60000; // 1 menit cache
+
+async function getDataFresh() {
+  const now = Date.now();
+  if (_allDataCache && (now - _cacheTime) < CACHE_TTL) return _allDataCache;
+  const data = await loadData();
+  _allDataCache = data;
+  _cacheTime = now;
+  return data;
+}
+
+// Reminder: simpan per nama+tanggal agar tidak muncul terus di sesi yang sama
+const _reminderShown = {};
 
 async function checkNotifAndReminder(nama) {
   try {
-    const data = _allDataCache || await loadData();
-    _allDataCache = data;
+    // Selalu fetch fresh saat pilih nama (tidak pakai cache)
+    _allDataCache = null;
+    const data = await getDataFresh();
     const readIds = getReadIds();
 
     // ── Cek notifikasi belum dibaca ──
@@ -741,13 +845,15 @@ async function checkNotifAndReminder(nama) {
       document.getElementById('alert-notif-sub').textContent = 'Manajemen memberikan komentar pada laporan Anda. Baca sebelum mengisi laporan hari ini.';
       document.getElementById('alert-notif-body').innerHTML = [...unread].reverse().slice(0, 3).map(d => `
         <div class="alert-comment-box">
-          <div class="alert-comment-date">📅 ${d.hariTanggal || d.tglRaw} · ${d.waktu_komentar || ''}</div>
+          <div class="alert-comment-date">📅 ${formatTgl(d.tglRaw, d.hariTanggal)} · ${d.waktu_komentar || ''}</div>
           <div class="alert-comment-text">${escHtml(d.komentar_admin).replace(/\n/g,'<br>')}</div>
         </div>`).join('');
       document.getElementById('alert-notif-overlay').classList.add('show');
-      // Reminder akan muncul setelah notif ditutup (di closeAlertNotif)
+      // Update badge
+      updateNotifBadge(nama, data);
+      // Reminder muncul setelah notif ditutup
     } else {
-      // Tidak ada notif baru, langsung cek reminder
+      updateNotifBadge(nama, data);
       checkReminder(nama, data);
     }
 
@@ -755,9 +861,13 @@ async function checkNotifAndReminder(nama) {
 }
 
 function checkReminder(nama, data) {
-  const today = getTodayRaw(); // format: 2026-06-25
-  // Cari laporan terakhir milik petugas SEBELUM hari ini
-  // tglRaw bisa berformat '2026-06-24' atau '2026-06-24T17:00:00.000Z'
+  const today = getTodayRaw();
+  const reminderKey = nama + '_' + today;
+
+  // Jangan tampilkan lagi jika sudah ditutup di sesi ini (dalam hari yang sama)
+  const shownToday = localStorage.getItem('ubr_reminder_' + reminderKey);
+  if (shownToday) return;
+
   const laporanLalu = [...data]
     .filter(d => {
       if (d.nama !== nama) return false;
@@ -770,12 +880,15 @@ function checkReminder(nama, data) {
   if (laporanLalu.length > 0) {
     const lap = laporanLalu[0];
     document.getElementById('alert-reminder-sub').textContent =
-      'Laporan ' + (lap.hariTanggal || lap.tglRaw.slice(0,10)) + ' · Jadikan acuan untuk hari ini.';
+      'Dari laporan ' + formatTgl(lap.tglRaw, lap.hariTanggal) + ' · Jadikan acuan untuk hari ini.';
     document.getElementById('alert-reminder-body').innerHTML = `
       <div class="alert-reminder-box">
         <div class="alert-reminder-label">📌 Rencana Tindak Lanjut</div>
         <div class="alert-reminder-text">${escHtml(lap.tindakLanjut).replace(/\n/g,'<br>')}</div>
       </div>`;
+    // Simpan nama petugas ke overlay untuk dipakai saat tutup
+    document.getElementById('alert-reminder-overlay').dataset.nama = nama;
+    document.getElementById('alert-reminder-overlay').dataset.key = reminderKey;
     document.getElementById('alert-reminder-overlay').classList.add('show');
   }
 }
@@ -788,8 +901,25 @@ function closeAlertNotif() {
 }
 
 function closeAlertReminder() {
-  document.getElementById('alert-reminder-overlay').classList.remove('show');
+  const overlay = document.getElementById('alert-reminder-overlay');
+  const key = overlay.dataset.key;
+  // Simpan bahwa reminder sudah dilihat hari ini untuk petugas ini
+  if (key) localStorage.setItem('ubr_reminder_' + key, '1');
+  overlay.classList.remove('show');
 }
+
+// Bersihkan reminder lama (lebih dari 2 hari) agar localStorage tidak menumpuk
+(function cleanOldReminders() {
+  const today = new Date();
+  const keys = Object.keys(localStorage).filter(k => k.startsWith('ubr_reminder_'));
+  keys.forEach(k => {
+    const parts = k.replace('ubr_reminder_', '').split('_');
+    const tgl = parts[parts.length - 1]; // format: 2026-06-25
+    if (tgl && tgl < new Date(today - 2 * 86400000).toISOString().slice(0,10)) {
+      localStorage.removeItem(k);
+    }
+  });
+})();
 
 function goToNotifPage() {
   document.getElementById('alert-notif-overlay').classList.remove('show');
@@ -1057,34 +1187,257 @@ function goBack() {
 }
 
 // ══════════════════════════════════════════════
-// SUBMIT
+// FOTO UPLOAD
 // ══════════════════════════════════════════════
+const MAX_FOTO = 5;
+const MAX_SIZE_MB = 5;
+let _fotoFiles = []; // array File objects
+
+function onFotoSelected(e) {
+  const files = Array.from(e.target.files);
+  const remaining = MAX_FOTO - _fotoFiles.length;
+  if (remaining <= 0) { showToast('⚠️ Maksimal ' + MAX_FOTO + ' foto'); return; }
+
+  let added = 0;
+  for (const f of files) {
+    if (_fotoFiles.length >= MAX_FOTO) break;
+    if (f.size > MAX_SIZE_MB * 1024 * 1024) { showToast('⚠️ ' + f.name + ' terlalu besar (maks 5MB)'); continue; }
+    if (!f.type.startsWith('image/')) continue;
+    _fotoFiles.push(f);
+    added++;
+  }
+
+  renderFotoPreview();
+  // Reset input agar bisa pilih file yang sama lagi
+  document.getElementById('foto-input').value = '';
+}
+
+function renderFotoPreview() {
+  const grid = document.getElementById('foto-preview-grid');
+  const countEl = document.getElementById('foto-count');
+  grid.innerHTML = '';
+
+  _fotoFiles.forEach((f, idx) => {
+    const url = URL.createObjectURL(f);
+    const wrap = document.createElement('div');
+    wrap.className = 'foto-thumb-wrap';
+    wrap.innerHTML = `<img src="${url}" alt="foto ${idx+1}">
+      <button class="foto-thumb-remove" onclick="removeFoto(${idx})">✕</button>`;
+    grid.appendChild(wrap);
+  });
+
+  if (_fotoFiles.length > 0) {
+    countEl.style.display = 'block';
+    countEl.textContent = _fotoFiles.length + ' foto dipilih · ' + (MAX_FOTO - _fotoFiles.length) + ' slot tersisa';
+    // Update upload area
+    document.getElementById('foto-upload-area').innerHTML = `
+      <div class="foto-upload-icon">➕</div>
+      <div class="foto-upload-text">Tambah foto lagi</div>
+      <div class="foto-upload-sub">${_fotoFiles.length}/${MAX_FOTO} foto</div>`;
+  } else {
+    countEl.style.display = 'none';
+    document.getElementById('foto-upload-area').innerHTML = `
+      <div class="foto-upload-icon">📷</div>
+      <div class="foto-upload-text">Ketuk untuk pilih foto</div>
+      <div class="foto-upload-sub">JPG / PNG · Maks 5 foto · 5MB per foto</div>`;
+  }
+}
+
+function removeFoto(idx) {
+  _fotoFiles.splice(idx, 1);
+  renderFotoPreview();
+}
+
+async function uploadSemuaFoto(waktuInput, nama, tglRaw) {
+  if (_fotoFiles.length === 0) return [];
+  const urls = [];
+  for (let i = 0; i < _fotoFiles.length; i++) {
+    const f = _fotoFiles[i];
+    const base64 = await fileToBase64(f);
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'uploadFoto',
+          waktuInput, nama, tglRaw,
+          fotoIndex: i + 1,
+          base64: base64.split(',')[1],
+          mimeType: f.type,
+        })
+      });
+      // no-cors tidak bisa baca response, anggap berhasil jika tidak throw
+      urls.push('pending_' + i);
+    } catch(e) {
+      console.error('Gagal upload foto', i+1, e);
+    }
+  }
+  return urls;
+}
+
+function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+// Kompres foto sebelum kirim agar tidak melebihi batas GAS (~4MB per request)
+function kompressFoto(file, maxWidthPx = 1200, qualityJpeg = 0.75) {
+  return new Promise((res) => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let w = img.width, h = img.height;
+        if (w > maxWidthPx) { h = Math.round(h * maxWidthPx / w); w = maxWidthPx; }
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        const b64 = canvas.toDataURL('image/jpeg', qualityJpeg);
+        res({ base64: b64.split(',')[1], mimeType: 'image/jpeg' });
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ══════════════════════════════════════════════
+// LIGHTBOX
+// ══════════════════════════════════════════════
+let _lbUrls = [];
+let _lbIdx = 0;
+
+function openLightbox(urls, idx) {
+  _lbUrls = urls;
+  _lbIdx = idx;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function lightboxNav(dir) {
+  _lbIdx = (_lbIdx + dir + _lbUrls.length) % _lbUrls.length;
+  renderLightbox();
+}
+
+function renderLightbox() {
+  document.getElementById('lightbox-img').src = _lbUrls[_lbIdx];
+  document.getElementById('lightbox-counter').textContent = (_lbIdx + 1) + ' / ' + _lbUrls.length;
+  // Sembunyikan nav jika hanya 1 foto
+  document.querySelector('.lightbox-nav').style.display = _lbUrls.length > 1 ? 'flex' : 'none';
+}
+
+// Keyboard navigation lightbox
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('show')) return;
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'Escape') { document.getElementById('lightbox').classList.remove('show'); document.body.style.overflow = ''; }
+});
+
+
 async function submitForm() {
   if (!validateStep(2)) return;
   const namaVal = document.getElementById('nama').value;
   const [nama, jabatan] = namaVal.split('|');
-  const payload = {
-    waktuInput: new Date().toLocaleString('id-ID'),
-    nama, jabatan,
+  const waktuInput = toLocaleWIB(new Date());
+  const tglRaw = getTodayRaw();
+
+  // Tampilkan success screen dulu
+  document.getElementById('step-2').classList.remove('active');
+  document.getElementById('progress-wrap').style.display = 'none';
+  const ss = document.getElementById('success-screen');
+  ss.classList.add('show');
+  document.getElementById('sum-header').textContent = nama + ' · ' + jabatan + ' · ' + getTodayStr();
+  document.getElementById('sum-aktivitas').textContent = document.getElementById('aktivitas').value.trim();
+  document.getElementById('sum-hasil').textContent = document.getElementById('hasil').value.trim();
+  document.getElementById('sum-tindak').textContent = document.getElementById('tindak-lanjut').value.trim();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const uploadInfo = document.getElementById('sum-foto-info');
+  const jumlahFoto = _fotoFiles.length;
+
+  // ── LANGKAH 1: Kirim laporan utama dulu (tanpa foto agar tidak timeout) ──
+  const payloadUtama = {
+    waktuInput, nama, jabatan,
     hariTanggal: getTodayStr(),
-    tglRaw: getTodayRaw(),
+    tglRaw,
     aktivitas: document.getElementById('aktivitas').value.trim(),
     hasil: document.getElementById('hasil').value.trim(),
     tindakLanjut: document.getElementById('tindak-lanjut').value.trim(),
     kendala: document.getElementById('kendala').value.trim(),
     catatan: document.getElementById('catatan').value.trim(),
+    jumlahFoto: jumlahFoto,
+    fotos: [],   // kosong dulu, foto dikirim terpisah via action uploadFoto
   };
-  document.getElementById('step-2').classList.remove('active');
-  document.getElementById('progress-wrap').style.display = 'none';
-  document.getElementById('success-screen').classList.add('show');
-  document.getElementById('sum-header').textContent = nama + ' · ' + jabatan + ' · ' + getTodayStr();
-  document.getElementById('sum-aktivitas').textContent = payload.aktivitas;
-  document.getElementById('sum-hasil').textContent = payload.hasil;
-  document.getElementById('sum-tindak').textContent = payload.tindakLanjut;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (uploadInfo && jumlahFoto > 0) {
+    uploadInfo.style.display = 'block';
+    uploadInfo.textContent = '📤 Mengirim laporan...';
+  }
+
   try {
-    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-  } catch(e) { console.error('Gagal kirim ke Sheets:', e); }
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payloadUtama)
+    });
+  } catch(e) {
+    console.error('Gagal kirim laporan:', e);
+    if (uploadInfo) { uploadInfo.style.display='block'; uploadInfo.textContent = '⚠️ Gagal mengirim laporan. Cek koneksi internet.'; }
+    return;
+  }
+
+  // ── LANGKAH 2: Kirim foto satu per satu (dikompres dulu agar < 4MB) ──
+  if (jumlahFoto > 0) {
+    let fotoOk = 0;
+    for (let i = 0; i < _fotoFiles.length; i++) {
+      if (uploadInfo) uploadInfo.textContent = '📷 Mengunggah foto ' + (i + 1) + ' dari ' + jumlahFoto + '...';
+      try {
+        const compressed = await kompressFoto(_fotoFiles[i]);
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'uploadFoto',
+            waktuInput,
+            nama,
+            tglRaw,
+            fotoIndex: i + 1,
+            base64: compressed.base64,
+            mimeType: compressed.mimeType,
+          })
+        });
+        fotoOk++;
+        // Jeda kecil antar upload agar GAS tidak throttle
+        await new Promise(r => setTimeout(r, 800));
+      } catch(e) {
+        console.error('Gagal upload foto', i + 1, e);
+      }
+    }
+    if (uploadInfo) {
+      uploadInfo.textContent = fotoOk === jumlahFoto
+        ? '✅ Laporan & ' + jumlahFoto + ' foto berhasil dikirim!'
+        : '⚠️ Laporan terkirim, ' + fotoOk + '/' + jumlahFoto + ' foto berhasil.';
+    }
+  }
+
+  _fotoFiles = [];
+  renderFotoPreview();
 }
 
 // ══════════════════════════════════════════════
@@ -1098,7 +1451,7 @@ async function renderDashboard() {
   const data = await loadData();
   _allDataCache = data;
   const n = data.length;
-  document.getElementById('admin-sub').textContent = n + ' laporan · Diperbarui: ' + new Date().toLocaleString('id-ID');
+  document.getElementById('admin-sub').textContent = n + ' laporan · Diperbarui: ' + toLocaleWIB(new Date());
   document.getElementById('st-total').textContent = n || '—';
   const today = getTodayRaw();
   const ptgsHariIni = new Set(data.filter(d => (d.tglRaw||'').slice(0,10) === today).map(d => d.nama)).size;
@@ -1107,11 +1460,13 @@ async function renderDashboard() {
   document.getElementById('st-kendala').textContent = adaKendala || '—';
   document.getElementById('st-jml-petugas').textContent = getPetugas().length || '—';
 
-  // Isi filter nama
+  // Isi filter nama — prioritas dari daftar petugas, tambah nama dari Sheets jika ada
   const filterNama = document.getElementById('filter-nama');
   const curFilter = filterNama.value;
   filterNama.innerHTML = '<option value="">👤 Semua Petugas</option>';
-  const namaList = [...new Set(data.map(d => d.nama).filter(Boolean))].sort();
+  const namaFromPetugas = getPetugas().map(p => p.nama);
+  const namaFromData = data.map(d => d.nama).filter(Boolean);
+  const namaList = [...new Set([...namaFromPetugas, ...namaFromData])].sort();
   namaList.forEach(nm => {
     const o = document.createElement('option');
     o.value = nm; o.textContent = nm;
@@ -1187,6 +1542,18 @@ function applyFilter() {
           <div class="lap-section-label">Catatan</div>
           <div class="lap-section-text">${escHtml(d.catatan).replace(/\n/g,'<br>')}</div>
         </div>` : ''}
+        ${d.foto_urls && d.foto_urls.trim() ? (() => {
+          const urls = d.foto_urls.split(',').map(u => u.trim()).filter(Boolean);
+          return `<div class="lap-section" style="margin-top:10px">
+            <div class="lap-section-label">📷 Foto Kunjungan (${urls.length})</div>
+            <div class="lap-foto-grid">
+              ${urls.map((url, fi) => `
+                <div class="lap-foto-thumb" onclick="openLightbox(${JSON.stringify(urls)}, ${fi})">
+                  <img src="${url}" alt="foto ${fi+1}" loading="lazy" onerror="this.parentElement.style.display='none'">
+                </div>`).join('')}
+            </div>
+          </div>`;
+        })() : ''}
       </div>
 
       <div class="lap-footer">
@@ -1212,7 +1579,7 @@ function formatTgl(tglRaw, hariTanggal) {
   if (hariTanggal && hariTanggal.trim() && !hariTanggal.includes('T')) return hariTanggal;
   if (!tglRaw) return '—';
   try {
-    const d = new Date(tglRaw);
+    const d = new Date(new Date(tglRaw).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
     return HARI[d.getDay()] + ', ' + d.getDate() + ' ' + BULAN[d.getMonth()] + ' ' + d.getFullYear();
   } catch { return tglRaw; }
 }
@@ -1253,8 +1620,9 @@ async function saveKomen(idx, waktuInput) {
   const payload = {
     action: 'komentar',
     waktuInput: waktuInput,
+    nama: _cachedData && _cachedData[idx] ? _cachedData[idx].nama : '',
     komentar_admin: text,
-    waktu_komentar: new Date().toLocaleString('id-ID'),
+    waktu_komentar: toLocaleWIB(new Date()),
   };
   try {
     await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
@@ -1305,7 +1673,7 @@ async function loadNotifikasi() {
   document.getElementById('notif-update-time').textContent = '—';
   const data = await loadData();
   const milik = data.filter(d => d.nama === nama && d.komentar_admin && d.komentar_admin.trim());
-  document.getElementById('notif-update-time').textContent = 'Diperbarui: ' + new Date().toLocaleString('id-ID');
+  document.getElementById('notif-update-time').textContent = 'Diperbarui: ' + toLocaleWIB(new Date());
   const readIds = getReadIds();
   const unread = milik.filter(d => !readIds.includes(d.waktuInput));
   // Update badge
